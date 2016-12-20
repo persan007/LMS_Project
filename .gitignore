@@ -7,6 +7,10 @@
 *.sln.docstates
 *.csproj
 LMS_Project/Scripts/_references.js
+LMS_Project/project.core.min.js
+LMS_Project/project.vendor.min.js
+LMS_Project/style.css
+LMS_Project/style.css.map
 
 # Build results
 [Dd]ebug/
