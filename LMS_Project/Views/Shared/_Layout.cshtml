@@ -10,7 +10,7 @@
         @Scripts.Render("~/bundles/modernizr")
 
         <!-- Render angular/custom scripts -->
-        @Scripts.Render("~/bundles/angular")
+        @Scripts.Render("~/bundles/core")
     </head>
 
     <body>
@@ -47,8 +47,7 @@
             </div>
         </footer>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/vendor")
         @RenderSection("scripts", required: false)
     </body>
 </html>
