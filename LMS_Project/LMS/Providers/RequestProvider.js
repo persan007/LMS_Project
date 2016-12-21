@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var Request = function ($http) {
+    var RequestProvider = function ($http) {
         var status = null;
 
         // If an error occurs display it in the console
@@ -30,9 +30,9 @@
         };
     }
 
-    LMSApp.provider("Request", [
+    LMSApp.factory("Request", [
         "$http",
-        Request
+        RequestProvider
     ]);
 
 }());
