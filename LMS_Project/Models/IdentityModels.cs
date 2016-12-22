@@ -14,6 +14,7 @@ namespace LMS_Project.Models
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+
             // Add custom user claims here
             return userIdentity;
         }
@@ -21,10 +22,9 @@ namespace LMS_Project.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
+        // public DbSet<TYPE> TYPE { get; set; }
+
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) {}
 
         public static ApplicationDbContext Create()
         {
