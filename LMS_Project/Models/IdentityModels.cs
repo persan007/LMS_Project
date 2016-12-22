@@ -24,8 +24,11 @@ namespace LMS_Project.Models
     {
         // public DbSet<TYPE> TYPE { get; set; }
 
+<<<<<<< HEAD
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) {}
 
+=======
+>>>>>>> 71d33377797d73b62f79ca699bd69ddacaaea56f
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
