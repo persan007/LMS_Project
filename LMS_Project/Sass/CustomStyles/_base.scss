@@ -34,3 +34,56 @@
         vertical-align: middle;
     }
 }
+
+.prototypeBorder
+{
+    border: 5px dotted red;
+}
+
+.prototypeFullheight
+{
+    height: 100%;
+}
+
+.side-panel
+{
+    height: 100vh;
+    background: #AAAAAB;
+
+    ul
+    {
+        list-style-type: none;
+        padding: 0;
+
+        li
+        {
+            padding: 0;
+            border-top: 1px solid $text-color-dark;
+
+            a
+            {
+                display: block;
+                padding: 10px 20px;
+                color: $text-color-dark;
+
+                &:hover
+                {
+                    background: magenta;
+                }
+
+                .fa
+                {
+                    color: $main-color;
+                    font-size: 20px;
+                    margin-right: 10px;
+                    vertical-align: middle;
+                }
+            }
+
+            &:last-of-type
+            {
+                border-bottom: 1px solid $text-color-dark;
+            }
+        }
+    }
+}
