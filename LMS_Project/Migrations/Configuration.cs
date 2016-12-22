@@ -8,22 +8,51 @@ namespace LMS_Project.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<LMS_Project.Database_Access.DbContextLayer>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(LMS_Project.Database_Access.DbContextLayer context)
+        protected override void Seed(ApplicationDbContext context)
         {
-            var userStore = new UserStore<ApplicationUser>(context);
-            var userManager = new UserManager<ApplicationUser>(userStore);
+            // Create handlers //
+            var UserStore = new UserStore<ApplicationUser>(context);
+            var UserManager = new UserManager<ApplicationUser>(UserStore);
 
-            var user1 = new ApplicationUser { UserName = "test@test.com", Email = "test@test.com" };
-            var user2 = new ApplicationUser { UserName = "test2@test.com", Email = "test2@test.com" };
-            userManager.Create(user1, "Test@123");
-            userManager.Create(user2, "Test@123");
+            // Create a temp user //
+            var TmpUser = new ApplicationUser() { UserName = "test@test.com", Email = "test@test.com", PhoneNumber = "0701234567" };
+
+            // Set password for user 'TmpUser' to 'Test@123' //
+            UserManager.Create(TmpUser, "Test@123");
+
+            // Create roll Teacher //
+            if (!context.Roles.Any(o => o.Name == "Teacher"))
+            {
+                var RoleStore = new RoleStore<IdentityRole>(context);
+                var RoleManager = new RoleManager<IdentityRole>(RoleStore);
+
+                var Role = new IdentityRole() { Name = "Teacher" };
+
+                RoleManager.Create(Role);
+            }
+
+            // Create roll Student //
+            if (!context.Roles.Any(o => o.Name == "Student"))
+            {
+                var RoleStore = new RoleStore<IdentityRole>(context);
+                var RoleManager = new RoleManager<IdentityRole>(RoleStore);
+
+                var Role = new IdentityRole() { Name = "Student" };
+
+                RoleManager.Create(Role);
+            }
+
+            // Set temp user role to teacher //
+            UserManager.AddToRole(TmpUser.Id, "Teacher");
+
+            // Save all changes //
             context.SaveChanges();
         }
     }
