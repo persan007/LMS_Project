@@ -22,7 +22,8 @@ namespace LMS_Project.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        // public DbSet<TYPE> TYPE { get; set; }
+        public DbSet<FileObjectModels> FilesObjects { get; set; }
+        public DbSet<CourseModels> Courses { get; set; }
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) {}
 

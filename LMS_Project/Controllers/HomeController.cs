@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMS_Project.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,12 @@ namespace LMS_Project.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult UploadFiles(FileObjectModels Files)
+        {
+            return null;
         }
     }
 }
