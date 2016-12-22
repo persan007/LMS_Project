@@ -1,10 +1,20 @@
 ﻿p
 {
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
 
+    & + p
+    {
+        margin-top: 15px;
+    }
 }
 
 a
 {
+    cursor: pointer;
+    font-size: 16px;
+
     &:hover
     {
         color: blue;
@@ -12,7 +22,40 @@ a
     }
 }
 
-span
+.fa
 {
+    $width: 20px;
+    $space: $width / 2;
 
+    color: $main-color;
+    display: inline-block;
+    width: $width;
+    text-align: left;
+
+    &.give-space
+    {
+        margin: 0 $space;
+    }
+
+    &.give-space-right
+    {
+        margin-right: $space;
+    }
+
+    &.give-space-left
+    {
+        margin-left: $space;
+    }
+
+    &.center-icon
+    {
+        text-align: center;
+        margin-left: -($space / 2);
+    }
+
+    &.transition
+    {
+        transition: all, 0.1s ease-in-out;
+        -webkit-transition: all, 0.1s ease-in-out;
+    }
 }

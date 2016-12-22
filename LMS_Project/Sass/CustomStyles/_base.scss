@@ -1,10 +1,4 @@
-﻿body, html 
-{
-    height: 100% !important;
-    min-height: 100%;
-}
-
-.alignVertically
+﻿.alignVertically
 {
     margin: auto;
     margin-top: 25%;
@@ -35,20 +29,10 @@
     }
 }
 
-.prototypeBorder
-{
-    border: 5px dotted red;
-}
-
-.prototypeFullheight
-{
-    height: 100%;
-}
-
 .side-panel
 {
     height: 100vh;
-    background: #AAAAAB;
+    background: $background-overlay-dark;
 
     ul
     {
@@ -64,19 +48,16 @@
             {
                 display: block;
                 padding: 10px 20px;
-                color: $text-color-dark;
+                color: $text-color-light;
 
                 &:hover
                 {
-                    background: magenta;
-                }
+                    background: $background-dark;
 
-                .fa
-                {
-                    color: $main-color;
-                    font-size: 20px;
-                    margin-right: 10px;
-                    vertical-align: middle;
+                    .fa
+                    {
+                        transform: scale(1.3);
+                    }
                 }
             }
 
