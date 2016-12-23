@@ -21,7 +21,7 @@ namespace LMS_Project.Controllers
         }
 
         [HttpPost]
-        public JsonResult UploadFiles(FileObjectModels Files)
+        public JsonResult UploadFiles(FileObjectModels[] Files)
         {
             var JsonObject = Json("Model Saved", JsonRequestBehavior.AllowGet);
             return JsonObject;

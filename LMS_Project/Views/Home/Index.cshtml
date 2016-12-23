@@ -65,9 +65,9 @@
         <!-- Render content in here -->
         <!--    FILE UPLOAD START  -->
         <div ng-controller="UploadController">
-            <form>
-                <button ng-click="selectFile()">Upload</button>
-                <input type="file" id="file" name="file" onchange="angular.element(this).scope().fileNameChanged(this)"/>
+            <form method="post" ng-submit="UploadFile(FilesToUpload)">
+                <input type="file" id="file" name="file" filereader="FilesToUpload" multiple />
+                <button type="submit">Upload</button>
             </form>
         </div>
 
