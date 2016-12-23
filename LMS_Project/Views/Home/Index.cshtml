@@ -2,7 +2,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<nav class="side-panel col-md-3 col-sm-4 col-xs-9">
+<nav class="side-panel col-md-3 col-sm-4 col-xs-9" ng-controller="NavigationController">
     <div class="row">
         <h5 class="col-xs-12 close-bottom">Menu</h5>
 
@@ -43,17 +43,10 @@
         <form method="post" action="#" class="col-xs-12">
             <div class="form-group">
                 <div class="input-group col-xs-12">
-                    <input type="text" class="form-control input-md col-xs-12" name="search" placeholder="Find what you are looking for..." />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="input-group col-xs-12">
-                    <button type="submit" class="login-btn col-xs-12">
-                        <span class="glass"></span>
+                    <div class="animated-search">
+                        <input type="text" class="col-xs-12" name="search" onblur="this.value=''" ng-model="SearchText" />
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <span>Search</span>
-                    </button>
+                    </div>
                 </div>
             </div>
         </form>

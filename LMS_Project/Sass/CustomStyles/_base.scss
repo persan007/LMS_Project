@@ -68,3 +68,67 @@
         }
     }
 }
+
+.animated-search
+{
+    position: relative;
+    height: 50px;
+
+    .fa
+    {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-260%, -52%);
+        font-size: 18px;
+
+        transition: all 0.25s ease-in-out;
+        -webkit-transition: all 0.25s ease-in-out;
+
+        &::after
+        {
+            content: "Search";
+            padding-left: 10px;
+            font-size: 20px;
+            color: $text-color-default;
+
+            transition: opacity 0.25s ease-in-out;
+            -webkit-transition: opacity 0.25s ease-in-out;
+        }
+    }
+
+    input[type=text]
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: transparent;
+        border: 1px solid $text-color-default;
+        font-size: 18px;
+        z-index: 2;
+
+        transition: background 0.25s ease-in-out;
+        -webkit-transition: background 0.25s ease-in-out;
+
+        &:focus
+        {
+            background: $background-light;
+            padding-left: 40px;
+            border: 1px solid $main-color;
+
+            & ~ .fa
+            {
+                left: 10px;
+                transform: translate(0, -52%);
+                z-index: 3;
+
+                &::after
+                {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}
