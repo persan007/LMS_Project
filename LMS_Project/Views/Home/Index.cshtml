@@ -41,5 +41,21 @@
 <div class="col-md-9 col-sm-8 col-xs-12">
     <div class="row theme-light">
         <!-- Render content in here -->
+        <!--    FILE UPLOAD START  -->
+        <div ng-controller="UploadController">
+            File:
+            <input type="file" ngf-select file-model="picFile" id="file" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile"><br />
+            <img ngf-thumbnail="picFile" class="thumb">
+            <br />
+            <button ng-click="picFile = null" ng-show="picFile">Remove</button><br />
+            <button type="button" class="btn btn-primary" ng-click="add()">Upload</button>
+        </div>
+
+
+        
+
+
+        <!--    FILE UPLOAD END    -->
+
     </div>
 </div>

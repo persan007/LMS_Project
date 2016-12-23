@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace LMS_Project.Models
 {
@@ -37,6 +39,7 @@ namespace LMS_Project.Models
         public FileObjectModels()
         {
             this.ID = Guid.NewGuid().ToString();
+            this.ApplicationUser = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(HttpContext.Current.User.Identity.GetUserId());
         }
     }
 }

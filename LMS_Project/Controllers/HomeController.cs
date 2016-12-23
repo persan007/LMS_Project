@@ -15,10 +15,15 @@ namespace LMS_Project.Controllers
             return View();
         }
 
+        public ActionResult FileUpload()
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult UploadFiles(FileObjectModels Files)
         {
-            return null;
+            return Json("Model Saved", JsonRequestBehavior.AllowGet);
         }
     }
 }
