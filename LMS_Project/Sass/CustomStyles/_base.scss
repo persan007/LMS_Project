@@ -108,6 +108,7 @@
         border: 1px solid $text-color-default;
         font-size: 18px;
         z-index: 2;
+        cursor: pointer;
 
         transition: background 0.25s ease-in-out;
         -webkit-transition: background 0.25s ease-in-out;
@@ -117,16 +118,19 @@
             background: $background-light;
             padding-left: 40px;
             border: 1px solid $main-color;
+            cursor: text;
 
             & ~ .fa
             {
                 left: 10px;
                 transform: translate(0, -52%);
                 z-index: 3;
+                cursor: text;
 
                 &::after
                 {
                     opacity: 0;
+                    cursor: text;
                 }
             }
         }
