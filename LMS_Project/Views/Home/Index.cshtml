@@ -89,8 +89,8 @@
     </div>
 </nav>
 
-<div class="col-md-9 col-sm-8 col-xs-12">
-    <div class="row theme-light">
+<div class="col-md-9 col-sm-8 col-xs-12 theme-light">
+    <div class="row">
         <!-- Render content in here -->
         <!--    FILE UPLOAD START  -->
         <div ng-controller="UploadController">
@@ -99,12 +99,11 @@
                 <button type="submit">Upload</button>
             </form>
         </div>
-
-
-        
-
-
         <!--    FILE UPLOAD END    -->
 
+        <div ng-controller="DownloadController">
+            <img ng-model="tmpImage" />
+        </div>
+
     </div>
-</div>
+    </div>
