@@ -23,11 +23,12 @@ namespace LMS_Project.Controllers
             return View();
         }
 
-        [HttpPost]
-        public Byte[] DownloadFiles(string fileName = "ppap.png")
+        //[HttpPost]
+        public ActionResult DownloadFiles(string fileName = "ppap.png")
         {
-            var blob = db.FilesObjects.Where(f => f.Filename == fileName).First().Data;
-            return blob;
+            var file = db.FilesObjects.Where(f => f.Filename == fileName).First();
+            var blob = file.Data;
+            return File(blob, file.ContentType, file.Filename);
         }
 
         [HttpPost]

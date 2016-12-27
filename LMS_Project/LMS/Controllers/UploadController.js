@@ -21,26 +21,12 @@
         
         var DoUpload = function (f) {
             var fd = new FormData();
-            //var dbugfd = "";
-
             console.log(f);
-
             for (var i = 0; i < f.length; i++) {
-                //fd.append(f[i].name, f[i]);
                 console.log("Appending to FormData");
                 console.log("File amount: " + f.length);
                 fd.append('[' + i + '].File', f[i]);
             }
-            
-            
-
-            //console.log("$scope.UploadFiles: " + $scope.UploadFiles);
-            
-            //Request.Make("/Home/UploadFiles/", fd).then(function (data) {
-            //    //console.log("fd: " + fd);
-            //    //console.log("dbugfd: " + dbugfd);
-            //    //console.log("data: " + data);
-            //});
 
             $.ajax({
                 type: "POST",

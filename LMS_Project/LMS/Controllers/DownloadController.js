@@ -1,32 +1,26 @@
 ﻿(function () {
     var DownloadController = function ($scope, Request) {
 
-        var blobToFile = function (theBlob, fileName){
-            theBlob.lastModifiedDate = new Date();
-            theBlob.name = fileName;
+        var saveData = (function () {
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            return function (data, fileName) {
+                var json = JSON.stringify(data),
+                    blob = new Blob([json], { type: "octet/stream" }),
+                    url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = fileName;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            };
+        }());
 
-            $scope.content = theBlob.url;
+        var data = { x: 42, s: "hello, world", d: new Date() },
+            fileName = "my-download.json";
 
-            return theBlob;
-        }
+        saveData(data, fileName);
 
-        var file = blobToFile(
-            $.ajax({
-                type: "POST",
-                url: '/Home/DownloadFiles',
-                fileName: 'ppap.png',
-                success: function (result) {
-                    console.log(result);
-                },
-                error: function (xhr, status, p3, p4) {
-                    var err = "Error " + " " + status + " " + p3 + " " + p4;
-                    if (xhr.responseText && xhr.responseText[0] == "{")
-                        err = JSON.parse(xhr.responseText).Message;
-                    console.log(err);
-                }
-            }),
-            'ppap.png'
-        );
 
 
         $scope.DownloadFile = file;
