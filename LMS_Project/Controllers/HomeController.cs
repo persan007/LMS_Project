@@ -23,6 +23,14 @@ namespace LMS_Project.Controllers
             return View();
         }
 
+        public string GetUrl(string fileName = "ppap.png")
+        {
+            var file = db.FilesObjects.Where(f => f.Filename == fileName).First();
+            var blob = file.Data;
+            var imgSrc = String.Format("data:" + file.ContentType + ";base64,{0}", blob);
+            return imgSrc;
+        }
+
         //[HttpPost]
         public ActionResult DownloadFiles(string fileName = "ppap.png")
         {
