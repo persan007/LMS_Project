@@ -136,3 +136,19 @@
         }
     }
 }
+
+.validation-summary-valid.alert-danger
+{
+    display: none;
+}
+
+.validation-summary-errors
+{
+    border-radius: 0;
+
+    ul
+    {
+        list-style-type: square;
+        padding: 5px 0 0 16px;
+    }
+}

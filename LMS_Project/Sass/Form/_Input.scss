@@ -106,21 +106,19 @@
         outline: none;
         position: relative;
 
+        transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+        -webkit-transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
+
         .fa
         {
             margin: 0 0 0 -20px;
             padding: 0 10px 0 0;
-
-            transition: color 0.1s ease-in-out;
-            -webkit-transition: color 0.1s ease-in-out;
         }
 
         &:hover
         {
-            .fa
-            {
-                color: $main-color;
-            }
+            background: $background-light;
+            color: $text-color-dark;
         }
     }
 
