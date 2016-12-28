@@ -93,7 +93,7 @@
     <div class="row">
         <!-- Render content in here -->
         <!--    FILE UPLOAD START  -->
-        <div ng-controller="UploadController">
+        <div ng-controller="FileController">
             <form method="post" ng-submit="UploadFile(FilesToUpload)">
                 <input type="file" id="file" name="file" filereader="FilesToUpload" multiple />
                 <button type="submit">Upload</button>
@@ -101,9 +101,9 @@
         </div>
         <!--    FILE UPLOAD END    -->
 
-        <div ng-controller="DownloadController">
-            <img src="/Home/GetUrl?=fileName=ppap.png" />
-        </div>
+        @*<div ng-controller="DownloadController">
+            <img ng-init="DisplayImage('ppap.png')" ng-src="data:image/PNG;base64,{{url}}" />
+        </div>*@
 
     </div>
     </div>

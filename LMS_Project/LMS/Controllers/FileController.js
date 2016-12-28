@@ -1,24 +1,7 @@
-﻿//(function () {
+﻿(function () {
 
-//    LMSApp.controller('UploadCtrl', ['$scope', function ($scope) {
-//        $scope.uploadFile = function (files) {
-//            console.log("HEJ");
-//            file.upload = Upload.upload({
-//                url: 'Home/UploadFiles',
-//                data: { file: files }
-//            })
-//        }
-//    }]);
+    var FileController = function ($scope, Request) {
 
-//})();
-
-
-
-////url: '../../Resources/Img/Logo/Koop-Forum-logo-small.png',
-(function () {
-
-    var UploadController = function ($scope, Request) {
-        
         var DoUpload = function (f) {
             var fd = new FormData();
             console.log(f);
@@ -70,14 +53,44 @@
             });
         }
 
-        $scope.UploadFile = tmpUpload;
-        $scope.FilesToUpload = [];
+        var file = function ()
+        { }
+
+        var displayImage = function (filename, element)
+        {
+            var urlCreator = window.URL || window.webkitURL;
+            Request.Make("/Home/GetImageBlobByFileName?fileName=" + filename).then(function (data) {
+                var binaryData = [];
+                binaryData.push(data);
+                console.log(data);
+                $scope.url = urlCreator.createObjectURL(new Blob([binaryData], { type: "image/png" }));
+            });
+        }
+
+        var uploadFile = function(files)
+        {
+            for (var i = 0; i < files.length; i++)
+            {
+                var fd = new FormData();
+                var blob = new Blob([files[i]], { type: files[i].type });
+                fd.append("blob", blob, files[i].filename);
+                Request.Make("/Home/UploadFiles/").then(function (data) {
+                    console.log(data);
+                    console.log(fd);
+                })
+            }
+        }
+
+        $scope.DownloadFile     = file;
+        $scope.DisplayImage     = displayImage;
+        $scope.UploadFile       = uploadFile;
+        $scope.FilesToUpload    = [];
     }
 
-    LMSApp.controller('UploadController', [
+    LMSApp.controller('FileController', [
         '$scope',
         'Request',
-        UploadController
+        FileController
     ]);
 
 }());
