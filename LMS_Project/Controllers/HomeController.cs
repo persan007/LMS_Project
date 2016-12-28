@@ -27,29 +27,31 @@ namespace LMS_Project.Controllers
             return View();
         }
 
-        public string GetImageBlobByFileName(string fileName = "ppap.png")
+        public string[] GetAllFilenames()
         {
-            var files = db.FilesObjects.Where(f => f.Filename == fileName);
-            if (files.Count() > 0)
+            List<FileObjectModels> files = db.FilesObjects.ToList();
+            string[] filenames = new string[files.Count()];
+            int index = 0;
+            foreach(var file in files)
             {
-                //string dataTmp = System.Text.Encoding.Default.GetString(files.First().Data);
-                string data = BlobToString(files.First().Data);
-                
-                return data;  
+                filenames[index] = file.Filename;
+                index++;
             }
+            return filenames;
+        }
+
+        public string GetUrlByFilename(string fileName = "ppap.png")
+        {
+            FileObjectModels file = db.FilesObjects.Single(f => f.Filename == fileName);
+
+            if (file != null)
+                return string.Format("data:{0};base64,{1}", file.ContentType, Convert.ToBase64String(file.Data));
+
             return null; 
         }
 
-        public string BlobToString(byte[] bytes)
+        public string DeBlobber(byte[] bytes)
         {
-            //string result = "";
-            //foreach (byte b in bytes)
-            //{
-            //    result += b;
-            //}
-
-            //return result;
-
             return Encoding.UTF8.GetString(bytes);
         }
 
