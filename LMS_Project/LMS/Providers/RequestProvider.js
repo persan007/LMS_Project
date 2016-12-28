@@ -23,7 +23,6 @@
 
             return $http.post(TO, DATA).then(function (response) {
                 status = response.status;
-                //console.log("status: " + status);
                 return response.data;
             }, OnError);
         }

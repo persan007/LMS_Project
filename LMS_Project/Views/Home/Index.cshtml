@@ -4,7 +4,7 @@
 
 <nav class="side-panel col-md-3 col-sm-4 col-xs-9" ng-controller="NavigationController">
     <div class="row">
-        <header class="col-xs-12">
+        <header class="col-xs-12 close-bottom">
             <h2 class="text-center">
                 <i class="fa fa-bandcamp give-space-right-x3" aria-hidden="true"></i>
                 <span>Float <sup>∞</sup></span>
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div class="image-wrapper-box col-xs-3">
+        <div class="image-wrapper-box col-xs-3" ng-click="LogOut()">
             <div class="table-fill">
                 <div class="table-content">
                     <div class="content">
@@ -101,9 +101,9 @@
         </div>
         <!--    FILE UPLOAD END    -->
 
-        <div ng-controller="DownloadController">
+        @*<div ng-controller="DownloadController">
             <img ng-model="tmpImage" />
-        </div>
+        </div>*@
 
     </div>
     </div>
