@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace LMS_Project.Controllers
 {
@@ -114,6 +117,20 @@ namespace LMS_Project.Controllers
                 if(System.IO.File.Exists(fullPath))
                     System.IO.File.Delete(fullPath);
             }
+        }
+
+        public string GetUserInformation()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return null;
+            }
+
+            var db = new ApplicationDbContext();
+            var User_Id = User.Identity.GetUserId();
+            var TmpUser = db.Users.Single(o => o.Id == User_Id);
+
+            return JsonConvert.SerializeObject(TmpUser, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
         }
     }
 }

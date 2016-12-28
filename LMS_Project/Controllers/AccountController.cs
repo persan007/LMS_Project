@@ -388,11 +388,16 @@ namespace LMS_Project.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        //[ValidateAntiForgeryToken]
+        public bool LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            if(User.Identity.IsAuthenticated)
+            {
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                return true;
+            }
+
+            return false;
         }
 
         //
