@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace LMS_Project.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -87,15 +87,19 @@ namespace LMS_Project.Controllers
         public string GetUserInformation()
         {
             if (!User.Identity.IsAuthenticated)
-            {
                 return null;
-            }
 
             var db = new ApplicationDbContext();
-            var User_Id = User.Identity.GetUserId();
-            var TmpUser = db.Users.Single(o => o.Id == User_Id);
+            var User_id = User.Identity.GetUserId();
+            var CurrentUser = db.Users.Select(o => new
+            {
+                Id = o.Id,
+                Firstname = o.Firstname,
+                Lastname = o.Lastname,
+                ProfileImage = o.ProfileImage ?? "http://placehold.it/100x100"
+            }).Where(o => o.Id == User_id);
 
-            return JsonConvert.SerializeObject(TmpUser, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+            return JsonConvert.SerializeObject(CurrentUser, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
         }
     }
 }

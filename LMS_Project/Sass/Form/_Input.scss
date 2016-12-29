@@ -1,5 +1,4 @@
-﻿
-.form-group
+﻿.form-group
 {
     & + .form-group
     {
@@ -115,7 +114,9 @@
             padding: 0 10px 0 0;
         }
 
-        &:hover
+        &:hover,
+        &:focus,
+        &:active
         {
             background: $background-light;
             color: $text-color-dark;

@@ -56,12 +56,13 @@
         background: url('/Resources/Img/login-background.jpg') center center no-repeat;
         background-size: cover !important;
         z-index: -1;
+        position: fixed;
 
         &::after
         {
             content: "";
             display: block;
-            position: absolute;
+            position: fixed;
             top: 0;
             right: 0;
             bottom: 0;
