@@ -37,6 +37,8 @@
                 </a>
             </li>
         </ul>
+
+        <div ng-if="User.Role" ng-include="'/Resources/Templates/_navPartial.html'"></div>
     </div>
 
     <div class="row">
@@ -103,10 +105,9 @@
         </div>
 
         <!--    FILE UPLOAD END    -->
-        <div>
+        @*<div>
             <button ng-click="DisplayImage('ppap.png')" ng-disabled="buttonClicked">Display Image</button>
             <img ng-show="buttonClicked" ng-init="DisplayImage('ppap.png')" ng-src="{{url}}" />
-
-        </div>
+        </div>*@
     </div>
 </div>
