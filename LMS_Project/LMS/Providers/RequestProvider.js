@@ -1,5 +1,4 @@
 ﻿(function () {
-
     var RequestProvider = function ($http) {
         var status = null;
 
@@ -25,7 +24,27 @@
             }, OnError);
         }
 
+        var makeFile = function (TO, DATA) {
+            TO = TO || null;
+
+            if (!TO) {
+                return TO;
+            }
+
+            return $http({
+                url: TO,
+                method: 'POST',
+                enctype: 'multipart/form-data',
+                data: DATA,
+                headers: { 'Content-Type': undefined },
+                transformRequest: angular.identity
+            }).then(function (response) {
+                return response.data;
+            }, OnError);
+        }
+
         return {
+            MakeFile: makeFile,
             Make: make,
             Status: status
         };
