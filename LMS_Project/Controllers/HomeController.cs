@@ -28,9 +28,12 @@ namespace LMS_Project.Controllers
             return View();
         }
 
-        public File DownloadFile(string fileName)
+        public ActionResult DownloadFile(string fileName)
         {
-            return _repo.DownloadFile(fileName);
+            //Retrieve file with corrisponding filename
+            var file = _repo.db.FilesObjects.Where(f => f.Filename == fileName).First();
+            //Return file
+            return File(file.Data, file.ContentType, file.Filename);
         }
 
         public string GetUrlByFilename(string fileName)

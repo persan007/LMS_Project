@@ -79,19 +79,6 @@ namespace LMS_Project.Repositories
         }
 
         /// <summary>
-        /// Returns a generated file based on filename
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public File DownloadFile(string fileName = "ppap.png")
-        {
-            //Retrieve file with corrisponding filename
-            var file = db.FilesObjects.Where(f => f.Filename == fileName).First();
-            //Return file
-            return Controller.File(file.Data, file.ContentType, file.Filename);
-        }
-
-        /// <summary>
         /// Convert file to blob, generate a FileObjectmodel and add to database
         /// </summary>
         /// <param name="files"></param>
