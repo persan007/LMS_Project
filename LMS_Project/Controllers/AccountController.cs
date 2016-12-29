@@ -16,7 +16,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LMS_Project.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Teacher")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -143,7 +143,6 @@ namespace LMS_Project.Controllers
         
 
         // GET: /Account/Register
-        [AllowAnonymous]
         public ActionResult Register()
         {
             ViewBag.UserRole = new SelectList(_context.Roles.ToList(), "Name", "Name");
@@ -153,7 +152,6 @@ namespace LMS_Project.Controllers
         
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -163,9 +161,9 @@ namespace LMS_Project.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                     await this.UserManager.AddToRoleAsync(user.Id, model.UserRole);
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRole);
 
                     // Create handlers //
                     //var UserStore = new UserStore<ApplicationUser>(_context);
@@ -185,6 +183,7 @@ namespace LMS_Project.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
@@ -408,11 +407,16 @@ namespace LMS_Project.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        //[ValidateAntiForgeryToken]
+        public bool LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            if(User.Identity.IsAuthenticated)
+            {
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                return true;
+            }
+
+            return false;
         }
 
         //

@@ -1,6 +1,20 @@
 ﻿.image-wrapper
 {
     position: relative;
+    padding: 0;
+
+    &-box
+    {
+        position: relative;
+        padding: 0;
+
+        &::after
+        {
+            content: "";
+            display: inline-block;
+            padding-top: 100%;
+        }
+    }
 
     &::after
     {
@@ -18,6 +32,11 @@
     right: 0;
     bottom: 0;
     left: 0;
+
+    &.image-fit
+    {
+        background-size: cover !important;
+    }
 
     &.logo-sm
     {
@@ -37,12 +56,13 @@
         background: url('/Resources/Img/login-background.jpg') center center no-repeat;
         background-size: cover !important;
         z-index: -1;
+        position: fixed;
 
         &::after
         {
             content: "";
             display: block;
-            position: absolute;
+            position: fixed;
             top: 0;
             right: 0;
             bottom: 0;

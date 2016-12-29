@@ -7,13 +7,13 @@ namespace LMS_Project.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Userinfo : IMigrationMetadata
+    public sealed partial class initialperake : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Userinfo));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialperake));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612271041273_Userinfo"; }
+            get { return "201612291004233_initial-per-ake"; }
         }
         
         string IMigrationMetadata.Source
