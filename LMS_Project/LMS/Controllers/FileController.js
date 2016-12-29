@@ -8,23 +8,30 @@
                 $scope.url = data;
                 console.log(data);
             });
+
             $scope.buttonClicked = true;
         }
 
         var uploadFile = function(files)
         {
             var fd = new FormData();
+
             for (var i = 0; i < files.length; i++)
             {
                 console.log(files[i]);
                 fd.append(files[i].name, files[i]);
             }
-            Request.MakeFile("/Home/UploadFiles/", fd).then(function (data) {console.log(data);});
+
+            Request.MakeFile("/Home/UploadFiles/", fd).then(function (data) {
+                console.log(data);
+            });
         }
 
         var allFileNames = function ()
         {
-            Request.Make("/Home/GetAllFilenames/").then(function (data) {console.log(data);})
+            Request.Make("/Home/GetAllFilenames/").then(function (data) {
+                console.log(data);
+            });
         }
 
         $scope.AllFileNames     = allFileNames;

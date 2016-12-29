@@ -91,13 +91,8 @@
     </div>
 </nav>
 
-<<<<<<< HEAD
-<div class="col-md-9 col-sm-8 col-xs-12 theme-light animated" id="document-content">
+<div class="col-md-9 col-sm-8 col-xs-12 theme-light animated" id="document-content" ng-controller="FileController">
     <div class="row">
-=======
-<div class="col-md-9 col-sm-8 col-xs-12 theme-light">
-    <div class="row" ng-controller="FileController">
->>>>>>> 7ab1b18da944abc7a385787a50780dee5e9fde76
         <!-- Render content in here -->
         <!--    FILE UPLOAD START  -->
         <div>
@@ -106,18 +101,12 @@
                 <button type="submit">Upload</button>
             </form>
         </div>
-        <!--    FILE UPLOAD END    -->
-<<<<<<< HEAD
-        @*<div ng-controller="DownloadController">
-                <img ng-model="tmpImage" />
-            </div>*@
-=======
 
+        <!--    FILE UPLOAD END    -->
         <div>
             <button ng-click="DisplayImage('ppap.png')" ng-disabled="buttonClicked">Display Image</button>
             <img ng-show="buttonClicked" ng-init="DisplayImage('ppap.png')" ng-src="{{url}}" />
 
         </div>
->>>>>>> 7ab1b18da944abc7a385787a50780dee5e9fde76
     </div>
 </div>
