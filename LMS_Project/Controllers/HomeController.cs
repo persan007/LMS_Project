@@ -13,12 +13,6 @@ namespace LMS_Project.Controllers
         public ActionResult Index()
         {
             return View();
-        }
-
-        [HttpPost]
-        public JsonResult UploadFiles(FileObjectModels Files)
-        {
-            return null;
-        }
+        }      
     }
 }
