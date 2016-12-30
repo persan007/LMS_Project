@@ -12,9 +12,7 @@
         // Returns the data obj from server
         var make = function (TO, DATA) {
             TO = TO || null;
-
-            console.log("TO: " + TO);
-            console.log("DATA: " + DATA);
+            DATA = DATA || null;
 
             if (!TO) {
                 return TO;
