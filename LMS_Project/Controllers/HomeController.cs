@@ -6,14 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using Newtonsoft.Json;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using LMS_Project.Repositories;
+using System.Web.Security;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LMS_Project.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private Repository _repo = new Repository();
@@ -59,18 +64,22 @@ namespace LMS_Project.Controllers
             return View();
         }
 
-        public string GetUserInformation()
+        public async Task<string> GetUserInformation()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return null;
-            }
-
             var db = new ApplicationDbContext();
-            var User_Id = User.Identity.GetUserId();
-            var TmpUser = db.Users.Single(o => o.Id == User_Id);
+            var User_id = User.Identity.GetUserId();
+            var rolesForUser = await System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRolesAsync(User_id);
 
-            return JsonConvert.SerializeObject(TmpUser, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+            var CurrentUser = db.Users.Select(o => new
+            {
+                Id = o.Id,
+                Firstname = o.Firstname,
+                Lastname = o.Lastname,
+                ProfileImage = o.ProfileImage ?? "http://placehold.it/100x100",
+                Role = rolesForUser.ToList().FirstOrDefault()
+            }).Where(o => o.Id == User_id);
+
+            return JsonConvert.SerializeObject(CurrentUser, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
         }
     }
 }
