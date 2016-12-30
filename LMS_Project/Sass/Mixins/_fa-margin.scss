@@ -9,7 +9,7 @@
         {
             margin-right: $space;
 
-            @for $i from 1 to $n {
+            @for $i from 2 to $n {
                 &-x#{$i} {
                     margin-right: $space * $i;
                 }
@@ -20,7 +20,7 @@
         {
             margin-left: $space;
 
-            @for $i from 1 to $n {
+            @for $i from 2 to $n {
                 &-x#{$i} {
                     margin-left: $space * $i;
                 }
