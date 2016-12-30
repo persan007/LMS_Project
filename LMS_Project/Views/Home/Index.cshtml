@@ -93,23 +93,8 @@
     </div>
 </nav>
 
-<div class="col-md-9 col-sm-8 col-xs-12 animated" id="document-content" ng-controller="FileController">
+<div class="col-md-9 col-sm-8 col-xs-12 animated" id="document-content">
     <div id="document-content-wrapper">
-        <div class="row" ng-view>
-            <!-- Render content in here -->
-            <!--    FILE UPLOAD START  -->
-            <div>
-                <form method="post" ng-submit="UploadFile(FilesToUpload)">
-                    <input type="file" id="file" name="file" filereader="FilesToUpload" multiple />
-                    <button type="submit">Upload</button>
-                </form>
-            </div>
-
-            <!--    FILE UPLOAD END    -->
-            @*<div>
-                    <button ng-click="DisplayImage('ppap.png')" ng-disabled="buttonClicked">Display Image</button>
-                    <img ng-show="buttonClicked" ng-init="DisplayImage('ppap.png')" ng-src="{{url}}" />
-                </div>*@
-        </div>
+        <div class="row" ng-view></div>
     </div>
 </div>
