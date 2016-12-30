@@ -79,6 +79,27 @@ namespace LMS_Project.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Personal Number")]
+        public string Persnr { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string Firstname { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string Lastname { get; set; }
+
+        [Required]
+        [Phone]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Select a Role")]
+        public string UserRole { get; set; }                            
     }
 
     public class ResetPasswordViewModel

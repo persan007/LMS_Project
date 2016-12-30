@@ -12,7 +12,7 @@ namespace LMS_Project.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ApplicationDbContext context)
@@ -22,7 +22,7 @@ namespace LMS_Project.Migrations
             var UserManager = new UserManager<ApplicationUser>(UserStore);
 
             // Create a temp user //
-            var TmpUser = new ApplicationUser() { UserName = "test@test.com", Email = "test@test.com", PhoneNumber = "0701234567" };
+            var TmpUser = new ApplicationUser() { UserName = "test@test.com", Email = "test@test.com", PhoneNumber = "0701234567", Persnr = "1212121222", Firstname = "Test", Lastname = "User", ProfileImage = null };
 
             // Set password for user 'TmpUser' to 'Test@123' //
             UserManager.Create(TmpUser, "Test@123");

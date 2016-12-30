@@ -15,6 +15,7 @@
 
         Request.Make("/Home/GetUserInformation/").then(function (data) {
             $scope.User = data[0];
+            $scope.User.Role = ((data[0].Role === "Teacher") ? true : false);
         });
         
         $scope.$watch("SearchText", SearchFiler);

@@ -9,17 +9,23 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LMS_Project.Models;
+using System.Data.Entity;
+using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 
 namespace LMS_Project.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Teacher")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
+            this._context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -134,28 +140,40 @@ namespace LMS_Project.Controllers
             }
         }
 
-        //
+        
+
         // GET: /Account/Register
-        [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.UserRole = new SelectList(_context.Roles.ToList(), "Name", "Name");
             return View();
         }
 
-        //
+        
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Firstname = model.Firstname, Lastname = model.Lastname, Persnr = model.Persnr, PhoneNumber = model.PhoneNumber  };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRole);
+
+                    // Create handlers //
+                    //var UserStore = new UserStore<ApplicationUser>(_context);
+                    //var UserManager2 = new UserManager<ApplicationUser>(UserStore);
+                    // Set temp user role to teacher //
+                    //UserManager.AddToRole(user.Id, model.UserRole);
+
+                    // Save all changes //
+                    //_context.SaveChanges();
+                   
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -165,6 +183,7 @@ namespace LMS_Project.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
