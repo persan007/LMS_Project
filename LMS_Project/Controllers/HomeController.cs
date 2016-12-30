@@ -46,6 +46,12 @@ namespace LMS_Project.Controllers
             return _repo.GetAllFilenames();
         }
 
+        public string GetAllLessons()
+        {
+            LessonModels[] arr = _repo.GetAllLessons();
+            return JsonConvert.SerializeObject(arr, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+        }
+
         [HttpPost]
         public ActionResult UploadFiles()
         {

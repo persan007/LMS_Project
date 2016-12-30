@@ -154,5 +154,19 @@ namespace LMS_Project.Repositories
             }
             return false;
         }
+
+        /// <summary>
+        /// Returns an array of all LessonModels in the database
+        /// </summary>
+        /// <returns></returns>
+        public LessonModels[] GetAllLessons()
+        {
+            return db.Lessons.ToArray();
+        }
+
+        //public LessonModels[] GetAllLessonsForWeek(int week)
+        //{
+
+        //}
     }
 }
