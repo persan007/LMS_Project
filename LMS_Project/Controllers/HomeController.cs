@@ -64,6 +64,11 @@ namespace LMS_Project.Controllers
             return View();
         }
 
+        public string[] GetAllRoleNames()
+        {
+            return _repo.GetAllRoleNames();
+        }
+
         public async Task<string> GetUserInformation()
         {
             var db = new ApplicationDbContext();

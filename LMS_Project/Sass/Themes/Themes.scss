@@ -1,4 +1,6 @@
 ﻿
-@import "_default.scss";
-@import "_light.scss";
-@import "_dark.scss"; 
+// Page themes
+@import "_themeTypes.scss";
+
+// Pages
+@import "_login.scss";

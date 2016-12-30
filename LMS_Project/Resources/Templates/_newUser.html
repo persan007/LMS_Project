@@ -1,4 +1,4 @@
-﻿<div class="theme-dark">
+﻿<div class="theme-dark" ng-controller="UserController">
     <h4 class="col-xs-12">Create a new account.</h4>
 
     <form method="post" action="/Account/Register/" class="row col-xs-12">
@@ -42,6 +42,7 @@
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
                 <input type="text" class="form-control input-lg" name="Roll" id="roll" placeholder="User roll" required />
+                <select ng-model="selectedName" ng-options="x for x in roles"></select>
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>
