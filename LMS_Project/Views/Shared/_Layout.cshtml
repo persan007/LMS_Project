@@ -14,6 +14,9 @@
 
         <!-- Render fontawesome icons -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+        <!-- Render ionicons icons -->
+        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
     </head>
 
     <body>
@@ -22,15 +25,6 @@
                 @RenderBody()
             </div>
         </div>
-
-        <footer class="container-fluid">
-            <div class="container">
-                <div class="row">
-                    <hr />
-                    <p>&copy; @DateTime.Now.Year This is the footer man.</p>
-                </div>
-            </div>
-        </footer>
 
         @Scripts.Render("~/bundles/vendor")
         @RenderSection("scripts", required: false)

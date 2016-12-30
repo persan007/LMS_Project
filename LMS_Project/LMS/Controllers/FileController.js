@@ -7,10 +7,6 @@
             Request.Make("/Home/GetUrlByFilename?fileName=" + filename).then(function (data) {
                 $scope.url = data;
                 console.log(data);
-                //var canvas = document.createElement("canvas")
-                //var context = canvas.getContext("2d")
-                //context.drawImage(img, 0, 0) // i assume that img.src is your blob url
-                //var dataurl = canvas.toDataURL("image/png", 1)
             });
 
             $scope.buttonClicked = true;
