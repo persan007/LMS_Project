@@ -11,9 +11,11 @@ LMSApp.config(["$routeProvider", function ($routeProvider) {
             templateUrl: basePath + "_main.html"
         })
         .when("/User/Add/", {
+            controller: "UserController",
             templateUrl: basePath + "_newUser.html"
         })
         .when("/Schedule/", {
+            controller: "ScheduleController",
             templateUrl: basePath + "_schedule.html"
         })
         .otherwise({
