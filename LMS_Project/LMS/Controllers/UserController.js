@@ -2,13 +2,13 @@
     var UserController = function ($scope, $http, Request) {
         
         var getAntiForgeryToken = function () {
-            Request.Make("/Account/GetAntiForgeryToken/").then(function (data) {
+            Request.Make("/Account/GetAntiForgeryToken/", "post").then(function (data) {
                 $scope.token = data;
             });
         }
 
         var getAllRoles = function () {
-            Request.Make("/Home/GetAllRoleNames").then(function (data) {
+            Request.Make("/Home/GetAllRoleNames", "get").then(function (data) {
                 console.log(data);
                 $scope.roles = data;
                 $scope.user.selectedName = data[0];

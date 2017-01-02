@@ -4,7 +4,7 @@
 
         var displayImage = function (filename)
         {
-            Request.Make("/Home/GetUrlByFilename?fileName=" + filename).then(function (data) {
+            Request.Make("/Home/GetUrlByFilename/", "get", filename).then(function (data) {
                 $scope.url = data;
                 console.log(data);
             });
@@ -22,14 +22,14 @@
                 fd.append(files[i].name, files[i]);
             }
 
-            Request.MakeFile("/Home/UploadFiles/", fd).then(function (data) {
+            Request.Make("/Home/UploadFiles/", "post", fd).then(function (data) {
                 console.log(data);
             });
         }
 
         var allFileNames = function ()
         {
-            Request.Make("/Home/GetAllFilenames/").then(function (data) {
+            Request.Make("/Home/GetAllFilenames/", "get").then(function (data) {
                 console.log(data);
             });
         }
