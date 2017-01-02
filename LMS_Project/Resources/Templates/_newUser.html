@@ -1,46 +1,47 @@
 ﻿<div class="theme-dark" ng-controller="UserController">
     <h4 class="col-xs-12">Create a new account.</h4>
 
-    <form method="post" ng-submit="SendForm()" class="row col-xs-12">
+    <form method="post" ng-submit="SendForm()" class="row col-xs-12" novalidate>
+        <!-- FIRSTNAME -->
+        <div class="form-group col-sm-6 col-xs-12">
+            <div class="input-group" ng-class="{ 'has-error' : user.Firstname.$invalid && !user.Firstname.$pristine }">
+                <input type="text" class="form-control input-lg" name="Firstname" id="firstname" placeholder="Firstname" ng-model="user.Firstname" required />
+                <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
+                <p ng-show="user.Firstname.$invalid && !user.Firstname.$pristine" class="help-block">You name is required.</p>
+            </div>
+        </div>
+
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" name="Firstname" id="firstname" placeholder="Firstname" ng-model="user.firstname" required />
+                <input type="text" class="form-control input-lg" name="Lastname" id="lastname" placeholder="Lastname" ng-model="user.Lastname" required />
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" name="Lastname" id="lastname" placeholder="Lastname" ng-model="user.lastname" required  />
+                <input type="text" class="form-control input-lg" name="Ssn" id="ssn" placeholder="SSN" ng-model="user.SSN" required />
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" name="Ssn" id="ssn" placeholder="SSN" ng-model="user.ssn" required  />
+                <input type="text" class="form-control input-lg" name="Phonenumber" id="phonenumber" placeholder="Phonenumber" ng-model="user.Phonenumber" required />
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" name="Phonenumber" id="phonenumber" placeholder="Phonenumber" ng-model="user.phonenumber" required  />
+                <input type="email" class="form-control input-lg" name="Email" id="email" placeholder="Email" ng-model="user.Email" required />
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>
 
+        <!-- Make into role ng-init="user.UserRole = roles[0].Id.toString()"-->
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="email" class="form-control input-lg" name="Email" id="email" placeholder="Email" ng-model="user.email" required  />
-                <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
-            </div>
-        </div>
-
-        <!-- Make into role -->
-        <div class="form-group col-sm-6 col-xs-12">
-            <div class="input-group">
-                <!--<input type="text" class="form-control input-lg" name="Roll" id="roll" placeholder="User roll" required />-->
                 <select class="form-control input-lg" name="UserRole" id="UserRole" ng-model="user.UserRole" ng-options="role.Id as role.Name for role in roles"></select>
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
@@ -48,14 +49,14 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="password" class="form-control input-lg" name="Password" id="password" placeholder="Password" ng-model="user.password" required  />
+                <input type="password" class="form-control input-lg" name="Password" id="password" placeholder="Password" ng-model="user.Password" required />
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="password" class="form-control input-lg" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm password" ng-model="user.confirmPassword" required />
+                <input type="password" class="form-control input-lg" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm password" ng-model="user.ConfirmPassword" required />
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>

@@ -12,6 +12,7 @@
         // Returns the data obj from server
         var make = function (TO, TYPE, DATA, ENCTYPE, HEADERS) {
             TO      = TO || null;
+            TYPE    = TYPE || null;
             DATA    = DATA || null;
             HEADERS = HEADERS || null;
             ENCTYPE = ENCTYPE || "application/x-www-form-urlencoded";
@@ -23,7 +24,7 @@
                 });
             }
 
-            if (String(TYPE).toLowerCase() != "get" || String(TYPE).toLowerCase() != "post") {
+            if ( !((String(TYPE).toLowerCase() != "get") || (String(TYPE).toLowerCase() != "post")) ) {
                 OnError({
                     status: 500,
                     statusText: "Invalid type {" + TYPE + "}"
@@ -43,7 +44,6 @@
         }
 
         return {
-            MakeFile: makeFile,
             Make: make,
             Status: status
         };

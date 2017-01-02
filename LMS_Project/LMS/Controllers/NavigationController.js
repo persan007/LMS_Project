@@ -8,12 +8,12 @@
         }
 
         var LogOut = function () {
-            Request.Make("/Account/LogOff/").then(function (data) {
+            Request.Make("/Account/LogOff/", "post").then(function (data) {
                 console.log(data);
             });
         }
 
-        Request.Make("/Home/GetUserInformation/").then(function (data) {
+        Request.Make("/Home/GetUserInformation/", "get").then(function (data) {
             $scope.User = data[0];
             $scope.User.Role = ((data[0].Role === "Teacher") ? true : false);
         });

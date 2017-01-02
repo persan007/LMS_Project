@@ -1,63 +1,36 @@
 ﻿(function () {
-    var UserController = function ($scope, $http, Request) {
-        
-        $scope.user = {};
+    var UserController = function ($scope, Request) {
 
         var sendForm = function () {
-            Request.Make("/Account/GetAntiForgeryToken/").then(function (data) {
-                Request.Make("/Account/Register/", "post", $scope.user, null, { 'RequestVerificationToken': data }).then(function (data) { }
-            )});
-        }
-
-        var getAllRoles = function () {
-            Request.Make("/Home/GetAllRoleNames").then(function (data) {
-                console.log(data);
-                $scope.roles = data;
-                $scope.user.selectedName = data[0];
+            console.log($scope.user);
+            Request.Make("/Account/GetAntiForgeryToken/", "post").then(function (data) {
+                Request.Make("/Account/Register/", "post", JSON.stringify($scope.user), null, { 'RequestVerificationToken': data });
             });
         }
 
-        //$scope.user = {};
-        //console.log($scope.user);
-        //$scope.sendForm = function () {
-        //    $http({
-        //        method: 'POST',
-        //        url: '/Account/Register',
-        //        data: $scope.user,
-        //        headers: {
-        //            'RequestVerificationToken': $scope.antiForgeryToken
-        //        }
-        //    }).success(function (data, status, headers, config) {
-        //        $scope.message = '';
-        //        if (data.success == false) {
-        //            var str = '';
-        //            for (var error in data.errors) {
-        //                str += data.errors[error] + '\n';
-        //            }
-        //            $scope.message = str;
-        //        }
-        //        else {
-        //            $scope.message = 'Saved Successfully';
-        //            $scope.person = {};
-        //        }
-        //    }).error(function (data, status, headers, config) {
-        //        $scope.message = 'Unexpected Error';
-        //    });
-        //};
+        Request.Make("/Home/GetAllRoleNames", "get").then(function (data) {
+            $scope.user.UserRole = data[0].Id.toString();
+            $scope.roles = data;
+        });
 
-        //formSubmit.run(['$http', function ($http) {
-        //    $http.defaults.headers.common['RequestVerificationToken'] = angular.element("body").attr('ncg-request-verification-token');
-        //}]);
+        
 
-        getAllRoles();
-        //$scope.GetAllRoles = getAllRoles;
-        //$scope.GetAntiForgeryToken = getAntiForgeryToken;
-        //getAntiForgeryToken();
+        $scope.user = {
+            Firstname: "Klas",
+            Lastname: "Claywuald",
+            SSN: "456456564",
+            Phonenumber: "564654564",
+            Email: "test2@test.com",
+            Password: "Test@123",
+            ConfirmPassword: "Test@123",
+            UserRole: null
+        };
+
+        
         $scope.SendForm = sendForm;
     }
     LMSApp.controller("UserController", [
         "$scope",
-        "$http",
         "Request",
         UserController
     ]);
