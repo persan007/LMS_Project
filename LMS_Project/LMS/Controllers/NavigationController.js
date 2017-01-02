@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var NavigationController = function ($scope, Request) {
+    var NavigationController = function ($scope, Request, $route) {
 
         var SearchFiler = function () {
             // TODO: Hitta all kurser, lärare mm  som matchar sökresultatet. (Akronym?)
@@ -9,7 +9,7 @@
 
         var LogOut = function () {
             Request.Make("/Account/LogOff/", "post").then(function (data) {
-                console.log(data);
+                $route.reload();
             });
         }
 
@@ -27,6 +27,7 @@
     LMSApp.controller("NavigationController", [
         "$scope",
         "Request",
+        "$route",
         NavigationController
     ]);
 

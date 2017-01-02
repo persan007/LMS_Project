@@ -28,7 +28,6 @@
             }
         ];
 
-
         Schedule.element.style.opacity = 0;
         Schedule.Initialize(5, false, "08:00", "17:00", test);
         Schedule.element.style.opacity = 1;
