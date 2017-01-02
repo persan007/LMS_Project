@@ -12,7 +12,7 @@ namespace LMS_Project.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ApplicationDbContext context)
@@ -22,10 +22,10 @@ namespace LMS_Project.Migrations
             var UserManager = new UserManager<ApplicationUser>(UserStore);
 
             // Create a temp user //
-            var TmpUser = new ApplicationUser() { UserName = "test@test.com", Email = "test@test.com", PhoneNumber = "0701234567" };
+            //var TmpUser = new ApplicationUser() { UserName = "test@test.com", Email = "test@test.com", PhoneNumber = "0701234567", SSN = "198604079070", Firstname = "Test", Lastname = "User", ProfileImage = null };
 
             // Set password for user 'TmpUser' to 'Test@123' //
-            UserManager.Create(TmpUser, "Test@123");
+            //UserManager.Create(TmpUser, "Test@123");
 
             // Create roll Teacher //
             if (!context.Roles.Any(o => o.Name == "Teacher"))
@@ -50,7 +50,7 @@ namespace LMS_Project.Migrations
             }
 
             // Set temp user role to teacher //
-            UserManager.AddToRole(TmpUser.Id, "Teacher");
+            //UserManager.AddToRole(TmpUser.Id, "Teacher");
 
             // Save all changes //
             context.SaveChanges();

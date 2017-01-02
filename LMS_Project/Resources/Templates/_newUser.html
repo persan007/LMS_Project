@@ -41,7 +41,7 @@
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
                 <!--<input type="text" class="form-control input-lg" name="Roll" id="roll" placeholder="User roll" required />-->
-                <select class="form-control input-lg" name="Role" id="role" ng-model="user.selectedName" ng-options="role for role in roles"></select>
+                <select class="form-control input-lg" name="UserRole" id="UserRole" ng-model="user.UserRole" ng-options="role.Id as role.Name for role in roles"></select>
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>
@@ -55,11 +55,11 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="password" class="form-control input-lg" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm password" required />
+                <input type="password" class="form-control input-lg" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm password" ng-model="user.confirmPassword" required />
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
             </div>
         </div>
-        <input id="antiForgeryToken" data-ng-model="antiForgeryToken" type="hidden" data-ng-init="antiForgeryToken='{{token}}'" />
+        <input id="antiForgeryToken" data-ng-model="antiForgeryToken" type="hidden" value="{{token}}" />
 
         <div class="form-group col-sm-6 col-sm-push-6 col-xs-12 col-xs-push-0">
             <button type="submit" ng-model="formSubmit" class="col-sm-6 col-sm-push-6 col-xs-12 col-xs-push-0">

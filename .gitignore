@@ -11,6 +11,7 @@ LMS_Project/project.core.min.js
 LMS_Project/project.vendor.min.js
 LMS_Project/style.css
 LMS_Project/style.css.map
+LMS_Project/Migrations/
 
 # Build results
 [Dd]ebug/

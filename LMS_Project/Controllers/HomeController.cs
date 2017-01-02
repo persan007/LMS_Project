@@ -66,7 +66,7 @@ namespace LMS_Project.Controllers
 
         public string GetAllRoleNames()
         {
-            var roles = _repo.GetAllRoles().Select(r => r.Name);
+            var roles = _repo.GetAllRoles();
             return JsonConvert.SerializeObject(roles, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects }); ;
         }
 
