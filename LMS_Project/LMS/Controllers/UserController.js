@@ -1,11 +1,19 @@
 ﻿(function () {
     var UserController = function ($scope, Request) {
 
-        var sendForm = function () {
-            console.log($scope.user);
-            Request.Make("/Account/GetAntiForgeryToken/", "post").then(function (data) {
-                Request.Make("/Account/Register/", "post", JSON.stringify($scope.user), null, { 'RequestVerificationToken': data });
-            });
+        var sendForm = function (isValid) {
+            if (isValid) {
+                alert('our form is amazing');
+                console.log($scope.user);
+                Request.Make("/Account/GetAntiForgeryToken/", "post").then(function (data) {
+                    Request.Make("/Account/Register/", "post", JSON.stringify($scope.user), null, { 'RequestVerificationToken': data });
+                });
+            }
+            else
+            {
+                alert('The form is missing some stuff');
+            }
+            
         }
 
         Request.Make("/Home/GetAllRoleNames", "get").then(function (data) {

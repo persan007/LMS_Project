@@ -1,13 +1,13 @@
 ﻿<div class="theme-dark" ng-controller="UserController">
     <h4 class="col-xs-12">Create a new account.</h4>
 
-    <form method="post" ng-submit="SendForm()" class="row col-xs-12" novalidate>
+    <form method="post" name="registerForm" ng-submit="SendForm(registerForm.$valid)" class="row col-xs-12" novalidate>
         <!-- FIRSTNAME -->
         <div class="form-group col-sm-6 col-xs-12">
-            <div class="input-group" ng-class="{ 'has-error' : user.Firstname.$invalid && !user.Firstname.$pristine }">
-                <input type="text" class="form-control input-lg" name="Firstname" id="firstname" placeholder="Firstname" ng-model="user.Firstname" required />
+            <div class="input-group" ng-class="{ 'has-error' : registerForm.user.Firstname.$invalid && !registerForm.user.Firstname.$pristine }">
+                <input type="text" class="form-control input-lg" name="Firstname" id="firstname" placeholder="Firstname" ng-model="user.Firstname" ng-minlength="1" ng-maxlength="50" required />
                 <div class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></div>
-                <p ng-show="user.Firstname.$invalid && !user.Firstname.$pristine" class="help-block">You name is required.</p>
+                <p ng-show="registerForm.user.Firstname.$invalid && !registerForm.user.Firstname.$pristine" class="help-block">You name is required.</p>
             </div>
         </div>
 
