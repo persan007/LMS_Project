@@ -1,6 +1,6 @@
 ﻿{
-    "name": "KoopForum",
-    "version": "0.1.0",
+    "name": "FloatInfinity",
+    "version": "0.2.5",
     "devDependencies": {
         "grunt": "~0.4.5",
         "grunt-scss-lint": "~0.3.6",
