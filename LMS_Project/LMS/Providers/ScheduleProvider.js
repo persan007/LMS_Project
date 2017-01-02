@@ -19,11 +19,23 @@
             canvasHeadlineHeight;
 
         var headlineFont,
-            timelineFont;
+            timelineFont,
+            lessonFont,
+            timestampFont;
+
+        var lineColor = "#000000",
+            textColor = "#000000",
+            bgColor = "#CCCCCC",
+            timeBoxbg = "#FFFFFF";
 
         // Used for clearing the canvas //
         var clear = function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        var setBgColor = function (color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(canvasContentOffset, canvasHeadlineHeight, canvasContentWidth, canvasContentHeight);
         }
 
         var setSize = function () {
@@ -46,20 +58,29 @@
             
             // Set text font size relative canvas width //
             if (canvas.clientWidth >= 780) {
-                headlineFont = (canvasContentWidth / numberOfColumns) / 9;
-                timelineFont = canvasContentOffset / 10;
+                headlineFont    = (canvasContentWidth / numberOfColumns) / 9;
+                timelineFont    = canvasContentOffset / 7;
+                lessonFont      = (canvasContentWidth / numberOfColumns) / 12;
+                timestampFont   = 12;
             }
             if (canvas.clientWidth < 780) {
-                headlineFont = (canvasContentWidth / numberOfColumns) / 8;
-                timelineFont = canvasContentOffset / 6;
+                headlineFont    = (canvasContentWidth / numberOfColumns) / 8;
+                timelineFont    = canvasContentOffset / 6;
+                lessonFont      = (canvasContentWidth / numberOfColumns) / 10;
+                timestampFont   = 10;
             }
             if (canvas.clientWidth < 480) {
-                headlineFont = (canvasContentWidth / numberOfColumns) / 6;
-                timelineFont = canvasContentOffset / 4;
+                headlineFont    = (canvasContentWidth / numberOfColumns) / 6;
+                timelineFont    = canvasContentOffset / 4;
+                lessonFont      = (canvasContentWidth / numberOfColumns) / 8;
+                timestampFont   = 8;
             }
 
             // Clear the canvas //
             clear();
+
+            // Set background color //
+            setBgColor(bgColor);
 
             // Call draw method to sync //
             draw();
@@ -68,31 +89,51 @@
         // Draw all the data to the canvas //
         var draw = function () {
 
-            // Draw board //
-            (function Board() {
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = "#000000";
+            // Draw Timeline //
+            (function Timeline() {
 
-                var columnWidth = canvasContentWidth / numberOfColumns;
+                // Show every 30min //
+                var interval = 30;
 
-                for (var i = 0; i < numberOfColumns; i++) {
-                    ctx.moveTo(columnWidth * i + canvasContentOffset, 0);
-                    ctx.lineTo(columnWidth * i + canvasContentOffset, canvas.height);
+                // Space between timestamps and first column //
+                var space = 5;
+
+                ctx.font = timelineFont + "px Arial";
+
+                var index = 0;
+                var dayLength = GetTimespanInMinutes(dayStartsAt, dayEndsAt);
+                var height = Math.ceil((canvasContentHeight - canvasHeadlineHeight) / (dayLength / interval));
+
+                for (var i = 0; i < dayLength; i += interval) {
+
+                    var time = GetTimeInHoursMinutes(i);
+                    var w = canvasContentOffset;
+                    var h = height * index + canvasHeadlineHeight;
+
+                    ctx.fillStyle = textColor;
+                    ctx.fillText(time, w - ctx.measureText(time).width - (space * 1.5), h - 2);
+
+                    ctx.fillStyle = lineColor;
+                    ctx.moveTo(w, h);
+                    ctx.lineTo(w - ctx.measureText(time).width - (space * 1.5), h);
+
+                    index += 1;
                 }
 
                 ctx.stroke();
-            })();
+            }());
 
             // Draw headers //
             (function Headers() {
                 ctx.lineWidth = 1;
-                ctx.strokeStyle = "#000000";
+                ctx.strokeStyle = lineColor;
 
                 var columnWidth = canvasContentWidth / numberOfColumns;
 
                 ctx.moveTo(canvasContentOffset, canvasHeadlineHeight);
                 ctx.lineTo(canvas.width + canvasContentOffset, canvasHeadlineHeight);
 
+                ctx.fillStyle = textColor;
                 ctx.font = headlineFont + "px Georgia";
 
                 for (var i = 0; i < titles.length; i++) {
@@ -107,30 +148,6 @@
                 ctx.stroke();
             }());
 
-            // Draw Timeline //
-            (function Timeline() {
-                // Show every 30min //
-                var interval = 60;
-
-                var index = 0;
-                var dayLength = GetTimespanInMinutes(dayStartsAt, dayEndsAt) + 60;
-                var height = Math.ceil((canvasContentHeight - canvasHeadlineHeight) / (dayLength / interval));
-
-                ctx.font = timelineFont + "px Arial";
-
-                for (var i = 0; i <= dayLength; i += interval) {
-
-                    var time = GetTimeInHoursMinutes(i);
-                    var w = canvasContentOffset - ctx.measureText(time).width - 10;
-                    var h = height * index + canvasHeadlineHeight + textHeight;
-
-                    ctx.fillText(time, w, h);
-                    index += 1;
-                }
-
-                ctx.stroke();
-            }());
-
             // Draw the lessons //
             (function Lessons() {
                 var columnWidth = canvasContentWidth / numberOfColumns;
@@ -140,22 +157,57 @@
                     angular.forEach(allLessons, function (value, key) {
                         if (String(value.Day).toLowerCase() == String(titles[i]).toLowerCase()) {
 
-                            var lessonLength = GetTimespanInMinutes(value.From, value.To);
-
                             var x = (columnWidth * i) + canvasContentOffset;
-                            var y = (canvasContentHeight / ConvertHoursToMinutes(value.From)) + canvasHeadlineHeight;
-                            var w = columnWidth;
-                            var h = lessonLength;
+                            var y = ((ConvertHoursToMinutes(value.From) - ConvertHoursToMinutes(dayStartsAt)) / dayLength) * canvasContentHeight + canvasHeadlineHeight;
+                            var h = (GetTimespanInMinutes(value.From, value.To) / dayLength) * canvasContentHeight;
 
+                            // Draw lesson box //
                             ctx.fillStyle = value.Color;
-                            ctx.fillRect(x, y, w, h);
+                            ctx.fillRect(x, y, columnWidth, h);
 
-                            console.log(value);
-                            console.log((ConvertHoursToMinutes(value.From) / dayLength));
+                            // Fill box with information //
+                            ctx.fillStyle = lineColor;
+                            ctx.font = lessonFont + "px Arial";
+                            ctx.fillText(value.LessonType + ", " + value.Teacher, x + 5, y + (h / 2) + (textHeight / 2));
+
+                            ctx.font = timestampFont + "px Arial";
+
+                            // Draw timestamps on top of box //
+                            var h = textHeight + 3;
+                            var w = ctx.measureText(value.From).width;
+
+                            ctx.fillStyle = timeBoxbg;
+                            ctx.fillRect(x, y, w, h);
+                            ctx.fillStyle = textColor;
+                            ctx.fillText(value.From, x, (y + h));
+
+                            // Draw timestamps on bottom of box //
+                            var h = ((GetTimespanInMinutes(value.From, value.To) / dayLength) * canvasContentHeight);
+                            var w = ctx.measureText(value.To).width;
+
+                            ctx.fillStyle = timeBoxbg;
+                            ctx.fillRect(x + columnWidth - w, (y + h) - (textHeight + 3), w, (textHeight + 3));
+                            ctx.fillStyle = textColor;
+                            ctx.fillText(value.To, (x + columnWidth - w), (y + h));
                         }
                     });
                 }
             }());
+
+            // Draw board //
+            (function Board() {
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = lineColor;
+
+                var columnWidth = canvasContentWidth / numberOfColumns;
+
+                for (var i = 0; i < numberOfColumns; i++) {
+                    ctx.moveTo(columnWidth * i + canvasContentOffset, 0);
+                    ctx.lineTo(columnWidth * i + canvasContentOffset, canvas.height);
+                }
+
+                ctx.stroke();
+            })(); 
         }
 
         // Initialize the canvas settings //
