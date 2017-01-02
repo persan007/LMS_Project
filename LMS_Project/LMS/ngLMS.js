@@ -1,10 +1,6 @@
 ﻿
 // Init angular application (global)
-var LMSApp = angular.module("LMS-app", ['ngRoute'])
-    //.run(function ($http) {
-    //    $http.defaults.headers.common['X-XSRF-Token'] =
-    //        angular.element('input[name="__RequestVerificationToken"]').attr('value');
-    //});
+var LMSApp = angular.module("LMS-app", ['ngRoute']);
 
 // Init angular routing
 LMSApp.config(["$routeProvider", function ($routeProvider) {

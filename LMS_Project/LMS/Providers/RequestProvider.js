@@ -4,45 +4,38 @@
 
         // If an error occurs display it in the console
         var OnError = function (response) {
-            console.error("Error: " + response);
+            console.error("Error: " + response.statusText);
             status = response.status;
             return response;
         }
 
         // Returns the data obj from server
-        var make = function (TO, DATA) {
-            TO = TO || null;
-            DATA = DATA || null;
-
+        var make = function (TO, TYPE, DATA, ENCTYPE, HEADERS) {
+            TO      = TO || null;
+            DATA    = DATA || null;
+            HEADERS = HEADERS || null;
+            ENCTYPE = ENCTYPE || "application/x-www-form-urlencoded";
+            
             if (!TO) {
-                return TO;
+                OnError({
+                    status: 500,
+                    statusText: "Invalid Action string {" + TO + "}"
+                });
             }
 
-            console.log("TO: " + TO);
-            console.log("DATA: " + DATA);
-
-            return $http.post(TO, DATA).then(function (response) {
-                status = response.status;
-                return response.data;
-            }, OnError);
-        }
-
-        var makeFile = function (TO, DATA) {
-            TO = TO || null;
-
-            if (!TO) {
-                return TO;
+            if (String(TYPE).toLowerCase() != "get" || String(TYPE).toLowerCase() != "post") {
+                OnError({
+                    status: 500,
+                    statusText: "Invalid type {" + TYPE + "}"
+                });
             }
-
-            console.log("TO: " + TO);
-            console.log("DATA: " + DATA);
 
             return $http({
                 url: TO,
-                method: 'POST',
-                enctype: 'multipart/form-data',
+                method: TYPE,
+                enctype: ENCTYPE,
                 data: DATA,
-                headers: { 'Content-Type': undefined },
+                headers: HEADERS,
                 transformRequest: angular.identity
             }).then(function (response) {
                 return response.data;
