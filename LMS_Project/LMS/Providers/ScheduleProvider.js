@@ -133,12 +133,35 @@
 
             // Draw the lessons //
             (function Lessons() {
+                var columnWidth = canvasContentWidth / numberOfColumns;
+                var dayLength = GetTimespanInMinutes(dayStartsAt, dayEndsAt) + 60;
 
+                for (var i = 0; i < titles.length; i++) {
+                    angular.forEach(allLessons, function (value, key) {
+                        if (String(value.Day).toLowerCase() == String(titles[i]).toLowerCase()) {
+
+                            var lessonLength = GetTimespanInMinutes(value.From, value.To);
+
+                            var x = (columnWidth * i) + canvasContentOffset;
+                            var y = (canvasContentHeight / ConvertHoursToMinutes(value.From)) + canvasHeadlineHeight;
+                            var w = columnWidth;
+                            var h = lessonLength;
+
+                            ctx.fillStyle = value.Color;
+                            ctx.fillRect(x, y, w, h);
+
+                            console.log(value);
+                            console.log((ConvertHoursToMinutes(value.From) / dayLength));
+                        }
+                    });
+                }
             }());
         }
 
         // Initialize the canvas settings //
         var init = function (boardColumns, startAtSunday, dayStarts, dayEnds, lessons) {
+            titles = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
             if (boardColumns > 0 && boardColumns <= 7)
                 numberOfColumns = boardColumns;
             else
@@ -148,8 +171,6 @@
             dayStartsAt = dayStarts;
             dayEndsAt = dayEnds;
             allLessons = lessons || Array(0);
-
-            titles = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
             if (dayStartsAtSunday) {
                 var day = titles.splice(-1, 1);
