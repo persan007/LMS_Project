@@ -13,7 +13,7 @@ namespace LMS_Project.Models
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string ProfileImage { get; set; }
-        public string Persnr { get; set; }
+        public string SSN { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

@@ -81,8 +81,8 @@ namespace LMS_Project.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "Personal Number")]
-        public string Persnr { get; set; }
+        [Display(Name = "Social Security Number")]
+        public string SSN { get; set; }
 
         [Required]
         [Display(Name = "First Name")]

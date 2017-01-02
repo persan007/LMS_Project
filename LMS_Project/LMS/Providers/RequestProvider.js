@@ -18,6 +18,9 @@
                 return TO;
             }
 
+            console.log("TO: " + TO);
+            console.log("DATA: " + DATA);
+
             return $http.post(TO, DATA).then(function (response) {
                 status = response.status;
                 return response.data;
@@ -30,6 +33,9 @@
             if (!TO) {
                 return TO;
             }
+
+            console.log("TO: " + TO);
+            console.log("DATA: " + DATA);
 
             return $http({
                 url: TO,

@@ -169,15 +169,9 @@ namespace LMS_Project.Repositories
         /// Returns an array with the names of the roles in the database
         /// </summary>
         /// <returns></returns>
-        public string[] GetAllRoleNames()
+        public List<IdentityRole> GetAllRoles()
         {
-            var roles = db.Roles.ToList();
-            string[] roleNames = new string[roles.Count()];
-            for (int i = 0; i < roles.Count(); i++)
-            {
-                roleNames[i] = roles[i].Name;
-            }
-            return roleNames;
+            return db.Roles.ToList();      
         }
     }
 }

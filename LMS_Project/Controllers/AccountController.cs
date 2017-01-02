@@ -9,9 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using LMS_Project.Models;
+using LMS_Project.Filters;
 using System.Data.Entity;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Helpers;
 
 
 namespace LMS_Project.Controllers
@@ -152,12 +154,15 @@ namespace LMS_Project.Controllers
         
         // POST: /Account/Register
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize]
+        //[AllowAnonymous]
+        [MyValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Firstname = model.Firstname, Lastname = model.Lastname, Persnr = model.Persnr, PhoneNumber = model.PhoneNumber  };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Firstname = model.Firstname, Lastname = model.Lastname, SSN = model.SSN, PhoneNumber = model.PhoneNumber  };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -189,6 +194,14 @@ namespace LMS_Project.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public string GetAntiForgeryToken()
+        {
+            string cookieToken, formToken, result;
+            AntiForgery.GetTokens(null, out cookieToken, out formToken);
+            result = cookieToken + ":" + formToken;
+            return result;
         }
 
         //

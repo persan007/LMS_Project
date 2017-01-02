@@ -64,9 +64,10 @@ namespace LMS_Project.Controllers
             return View();
         }
 
-        public string[] GetAllRoleNames()
+        public string GetAllRoleNames()
         {
-            return _repo.GetAllRoleNames();
+            var roles = _repo.GetAllRoles();
+            return JsonConvert.SerializeObject(roles, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects }); ;
         }
 
         public async Task<string> GetUserInformation()
