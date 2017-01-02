@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace LMS_Project.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class MyValidateAntiForgeryTokenAttribute : FilterAttribute//, IAuthorizationFilter
+    public class ValidateAngularAntiForgery : FilterAttribute//, IAuthorizationFilter
     {
 
 

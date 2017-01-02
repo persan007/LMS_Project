@@ -156,7 +156,7 @@ namespace LMS_Project.Controllers
         [HttpPost]
         [Authorize]
         //[AllowAnonymous]
-        [MyValidateAntiForgeryToken]
+        [ValidateAngularAntiForgery]
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
