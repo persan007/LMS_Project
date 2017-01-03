@@ -5,14 +5,20 @@ $background-overlay-light: rgba(255, 255, 255, 0.4);
 $background-light: #EEEEEE;
 $background-dark: #333333;
 
-
 // Text-colors
 $text-color-default: white;
 $text-color-light: #EEEEEE;
 $text-color-dark: #555555;
-$main-color: orange;
 
 // Header-colors
 $header-color-default: white;
 $header-color-light: #EEEEEE;
 $header-color-dark: #555555;
+
+// Border-colors
+$border-color-default: #CCCCCC;
+
+// Page-nice-looking-guuudz
+$main-color: orange;
+$warning-color: #DD0000;
+$success-color: #00DD00;
