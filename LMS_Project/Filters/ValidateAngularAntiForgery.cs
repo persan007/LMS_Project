@@ -8,10 +8,8 @@ using System.Web.Mvc;
 namespace LMS_Project.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class ValidateAngularAntiForgery : FilterAttribute//, IAuthorizationFilter
+    public class ValidateAngularAntiForgery : FilterAttribute
     {
-
-
         private void ValidateRequestHeader(HttpRequestBase request)
         {
             string cookieToken = String.Empty;
@@ -29,26 +27,9 @@ namespace LMS_Project.Filters
             AntiForgery.Validate(cookieToken, formToken);
         }
 
-        //AuthorizationContext
-        //filterContext.HttpContext.Request
         public void OnAuthorization(HttpContextBase filterContext)
         {
             ValidateRequestHeader(filterContext.Request);
-            //try
-            //{
-            //    if (filterContext.HttpContext.Request.IsAjaxRequest())
-            //    {
-            //        ValidateRequestHeader(filterContext.HttpContext.Request);
-            //    }
-            //    else
-            //    {
-            //        AntiForgery.Validate();
-            //    }
-            //}
-            //catch (HttpAntiForgeryException e)
-            //{
-            //    throw new HttpAntiForgeryException("Anti forgery token cookie not found");
-            //}
         }
     }
 }

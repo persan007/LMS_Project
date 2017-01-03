@@ -33,8 +33,24 @@
 
 #document-content
 {
+    $marginTop: 50px;
     height: 100vh;
     overflow-y: scroll;
+
+    &.container-fluid
+    {
+        #document-content-wrapper
+        {
+            margin-top: $marginTop;
+        }
+    }
+
+     @media (max-width: $screen-sm-min) {
+        &-wrapper
+        {
+            margin-top: $marginTop;
+        }
+    }
 }
 
 #ScheduleCanvas
