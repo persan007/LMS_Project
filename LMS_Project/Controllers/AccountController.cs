@@ -198,6 +198,7 @@ namespace LMS_Project.Controllers
 
         //
         // GET: /Account/GetAntiForgeryToken
+        [AllowAnonymous]
         public string GetAntiForgeryToken()
         {
             string cookieToken, formToken, result;
