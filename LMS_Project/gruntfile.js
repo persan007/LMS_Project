@@ -12,6 +12,9 @@ module.exports = function (grunt) {
             }
         },
         uglify: {
+            options: {
+                sourceMap: true
+            },
             core: { files: { 'project.core.min.js': ['Scripts/angular.js', 'Scripts/angular-route.js', 'LMS/*.js', 'LMS/**/*.js'] } },
             vendor: { files: { 'project.vendor.min.js': ['Scripts/jquery-1.10.2.min.js', 'Scripts/bootstrap.js'] } }
         },
