@@ -2,15 +2,14 @@
     <h4 class="col-xs-12">Create a new account.</h4>
 
     <form method="post" name="registerForm" ng-submit="SendForm(registerForm.$valid)" class="row col-xs-12" novalidate>
-        <!-- FIRSTNAME -->
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group" ng-class="{ 'has-error' : registerForm.user.Firstname.$invalid && !registerForm.user.Firstname.$pristine }">
-                <input type="text" class="form-control input-lg" name="Firstname" id="firstname" placeholder="Firstname" ng-model="user.Firstname" ng-pattern="/^[a-zA-Z]*$/" ng-minlength="1" ng-maxlength="50" required />
+                <input type="text" class="form-control input-lg" name="Firstname" id="firstname" placeholder="Firstname" ng-model="user.Firstname" ng-pattern="/^[a-z|å|ä|öA-Z|Å|Ä|Ö-]*$/" ng-minlength="1" ng-maxlength="50" required />
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-pencil center-icon-block" aria-hidden="true"></i>
                     <div class="help-block info">
-                        <div ng-if="registerForm.Firstname.$invalid && registerForm.Firstname.$touched && !registerForm.Firstname.$error.pattern">A firstname is required.</div>
-                        <div ng-if="registerForm.Firstname.$error.pattern">The name cannot contain numbers</div>
+                        <div ng-if="registerForm.Firstname.$touched && !registerForm.Firstname.$error.pattern && registerForm.Firstname.$invalid">Firstname is required.</div>
+                        <div ng-if="registerForm.Firstname.$touched && registerForm.Firstname.$error.pattern">Firstname can only contain characters A-Ö.</div>
                     </div>
                 </div>
             </div>
@@ -18,12 +17,12 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" name="Lastname" id="lastname" placeholder="Lastname" ng-model="user.Lastname" ng-pattern="/^[a-zA-Z]*$/" required />
+                <input type="text" class="form-control input-lg" name="Lastname" id="lastname" placeholder="Lastname" ng-model="user.Lastname" ng-pattern="/^[a-z|å|ä|öA-Z|Å|Ä|Ö-]*$/" required />
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-pencil center-icon-block" aria-hidden="true"></i>
                     <div class="help-block info">
-                        <div ng-if="registerForm.Lastname.$invalid && registerForm.Lastname.$touched && !registerForm.Lastname.$error.pattern">A lastname is required.</div>
-                        <div ng-if="registerForm.Lastname.$error.pattern">The lastname cannot contain numbers</div>
+                        <div ng-if="registerForm.Lastname.$touched && !registerForm.Lastname.$error.pattern && registerForm.Lastname.$invalid">Lastname is required.</div>
+                        <div ng-if="registerForm.Lastname.$touched && registerForm.Lastname.$error.pattern">Lastname can only contain characters A-Ö.</div>
                     </div>
                 </div>
             </div>
@@ -31,14 +30,13 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" name="SSN" id="ssn" placeholder="SSN" ng-model="user.SSN" ng-pattern="/^[0-9]*$/" ng-minlength="12" ng-maxlength="12" required />
+                <input type="text" class="form-control input-lg" name="SSN" id="SSN" placeholder="SSN" ng-model="user.SSN" ng-pattern="/^[0-9]*$/" ng-minlength="12" ng-maxlength="12" required />
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-key center-icon-block" aria-hidden="true"></i>
                     <div class="help-block info">
-                        <div ng-if="registerForm.SSN.length == 0 && registerForm.SSN.$touched && !registerForm.SSN.$error.pattern && registerForm.SSN.$invalid">A Social Security Number is required</div>
-                        <div ng-if="registerForm.SSN.$error.pattern">The SSN cannot contain letters</div>
-                        <div ng-if="registerForm.SSN.$touched && registerForm.SSN.$error.minlength && !registerForm.SSN.$error.pattern">The SSN cannot be shorter than 12 numbers</div>
-                        <div ng-if="registerForm.SSN.$touched && registerForm.SSN.$error.maxlength">The SSN cannot be longer than 12 numbers</div>
+                        <div ng-if="registerForm.SSN.$touched && registerForm.SSN.$error.required && registerForm.SSN.$invalid">A Social Security Number is required.</div>
+                        <div ng-if="registerForm.SSN.$touched && registerForm.SSN.$error.pattern">The Social Security Number can only contain numbers.</div>
+                        <div ng-if="registerForm.SSN.$touched && !registerForm.SSN.$error.pattern && registerForm.SSN.$error.minlength || registerForm.SSN.$error.maxlength">The Social Security Number must be exactly 12 numbers long.</div>
                     </div>
                 </div>
             </div>
@@ -50,10 +48,9 @@
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-mobile center-icon-block" aria-hidden="true"></i>
                     <div class="help-block info">
-                        <div ng-if="registerForm.Phonenumber.length == 0 && registerForm.Phonenumber.$touched && !registerForm.Phonenumber.$error.pattern">A phonenumber is required</div>
-                        <div ng-if="registerForm.Phonenumber.$error.pattern">The phonenumber cannot contain letters</div>
-                        <div ng-if="registerForm.Phonenumber.$touched && registerForm.Phonenumber.$error.minlength">The phonenumber cannot be shorter than 10 numbers</div>
-                        <div ng-if="registerForm.Phonenumber.$touched && registerForm.Phonenumber.$error.maxlength">The phonenumber cannot be longer than 10 numbers</div>
+                        <div ng-if="registerForm.Phonenumber.$touched && registerForm.Phonenumber.$error.required && registerForm.Phonenumber.$invalid">Phonenumber is required.</div>
+                        <div ng-if="registerForm.Phonenumber.$touched && registerForm.Phonenumber.$error.pattern">The phonenumber can only contain numbers.</div>
+                        <div ng-if="registerForm.Phonenumber.$touched && !registerForm.Phonenumber.$error.pattern && registerForm.Phonenumber.$error.minlength || registerForm.Phonenumber.$error.maxlength">The phonenumber must be exactly 10 numbers long.</div>
                     </div>
                 </div>
             </div>
@@ -61,15 +58,17 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="email" class="form-control input-lg" name="Email" id="email" placeholder="Email" ng-model="user.Email" required />
+                <input type="email" class="form-control input-lg" name="Email" id="email" placeholder="Email" ng-model="user.Email" ng-pattern="/.+@.+/" required />
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-at center-icon-block" aria-hidden="true"></i>
-                    <div class="help-block info">An email is required.</div>
+                    <div class="help-block info">
+                        <div ng-if="registerForm.Email.$touched && registerForm.Email.$error.required && registerForm.Email.$invalid">Email is required.</div>
+                        <div ng-if="registerForm.Email.$touched && registerForm.Email.$error.pattern">Email must be a valid email address.</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Make into role ng-init="user.UserRole = roles[0].Id.toString()"-->
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
                 <select class="form-control input-lg" name="UserRole" id="UserRole" ng-model="user.UserRole" ng-options="role.Id as role.Name for role in roles"></select>
@@ -81,23 +80,25 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="password" class="form-control input-lg" name="Password" id="password" placeholder="Password" ng-model="user.Password" required />
+                <input type="password" class="form-control input-lg" name="Password" id="password" placeholder="Password" ng-model="user.Password" ng-pattern="/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&-_])[A-Za-z\d$@$!%*#?&-_]{8,}$/" required />
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-unlock-alt center-icon-block" aria-hidden="true"></i>
-                    <div class="help-block info">A password is required</div>
+                    <div class="help-block info">
+                        <div ng-if="registerForm.Password.$touched && registerForm.Password.$error.required && registerForm.Password.$invalid">Password is required.</div>
+                        <div ng-if="registerForm.Password.$touched && registerForm.Password.$error.pattern">Password must contain uppercase and lowercase characters,<br /> a number, a symbol and at least be six characters long.</div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="password" class="form-control input-lg" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm password" ng-model="user.ConfirmPassword"  required /> 
+                <input type="password" class="form-control input-lg" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm password" ng-model="user.ConfirmPassword" ng-pattern="{{user.Password}}" required /> 
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-lock center-icon-block" aria-hidden="true"></i>
                     <div class="help-block info">
-                        <div ng-if="registerForm.ConfirmPassword.$touched && registerForm.ConfirmPassword.$invalid">You need to confirm the password</div>
-                        <div ng-if="registerForm.ConfirmPassword.$error.pattern && registerForm.ConfirmPassword.$touched">The confirmation doesn't match the password</div>
-
+                        <div ng-if="registerForm.ConfirmPassword.$touched && registerForm.ConfirmPassword.$error.required && registerForm.ConfirmPassword.$invalid">Password confirmation is required.</div>
+                        <div ng-if="registerForm.ConfirmPassword.$touched && registerForm.ConfirmPassword.$error.pattern">Password does not match.</div>
                     </div>
                 </div>
             </div>
