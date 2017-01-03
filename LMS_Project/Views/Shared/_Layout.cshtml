@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title | LMS</title>
 
+        <!-- Render page stylesheets -->
         @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
 
         <!-- Render angular/custom scripts -->
         @Scripts.Render("~/bundles/core")
@@ -26,6 +26,7 @@
             </div>
         </div>
 
+        <!-- Render jQuery and Bootstrap.js -->
         @Scripts.Render("~/bundles/vendor")
         @RenderSection("scripts", required: false)
     </body>
