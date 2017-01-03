@@ -15,7 +15,8 @@ module.exports = function (grunt) {
             options: {
                 sourceMap: true
             },
-            core: { files: { 'project.core.min.js': ['Scripts/angular.js', 'Scripts/angular-route.js', 'LMS/*.js', 'LMS/**/*.js'] } },
+            core: { files: { 'project.core.min.js': ['LMS/*.js', 'LMS/**/*.js'] } },
+            angular: { files: { 'project.angular.min.js': ['Scripts/angular.js', 'Scripts/angular-route.js', 'Scripts/angular-animate.min.js', ] } },
             vendor: { files: { 'project.vendor.min.js': ['Scripts/jquery-3.1.1.js', 'Scripts/bootstrap.js'] } }
         },
         watch: {
