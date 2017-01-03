@@ -1,8 +1,8 @@
 ﻿(function () {
     var ScheduleProvider = function ($interval) {
-        var canvas = document.getElementById("ScheduleCanvas");
-        var ctx = canvas.getContext("2d");
-        var textHeight = ctx.measureText("_").width;
+        var canvas,
+            ctx,
+            textHeight;
 
         var canvasCurrentWidthCheck = 0;
 
@@ -157,22 +157,38 @@
                     angular.forEach(allLessons, function (value, key) {
                         if (String(value.Day).toLowerCase() == String(titles[i]).toLowerCase()) {
 
+                            // Draw lesson box //
+                            ctx.fillStyle = value.Color;
+
                             var x = (columnWidth * i) + canvasContentOffset;
                             var y = ((ConvertHoursToMinutes(value.From) - ConvertHoursToMinutes(dayStartsAt)) / dayLength) * canvasContentHeight + canvasHeadlineHeight;
                             var h = (GetTimespanInMinutes(value.From, value.To) / dayLength) * canvasContentHeight;
-
-                            // Draw lesson box //
-                            ctx.fillStyle = value.Color;
+                            
                             ctx.fillRect(x, y, columnWidth, h);
+
+                            ctx.strokeStyle = "rgba(0, 0, 0, 0.15)";
+                            ctx.strokeRect(x, y, columnWidth, h);
 
                             // Fill box with information //
                             ctx.fillStyle = lineColor;
                             ctx.font = lessonFont + "px Arial";
-                            ctx.fillText(value.LessonType + ", " + value.Teacher, x + 5, y + (h / 2) + (textHeight / 2));
+                            ctx.textAlign = "center";
 
-                            ctx.font = timestampFont + "px Arial";
+                            var x1 = x + (columnWidth / 2);
+                            var y1 = y + (h / 2) - textHeight;
+                            var x2 = x + (columnWidth / 2);
+                            var y2 =  y1 + (textHeight * 3.5);
+                            
+                            var lessonTypeTeacher = value.LessonType + ", " + value.Teacher;
+                            var classroom = value.Classroom;
+
+                            ctx.fillText(lessonTypeTeacher, x1, y1);
+                            ctx.fillText(classroom, x2, y2);
 
                             // Draw timestamps on top of box //
+                            ctx.font = timestampFont + "px Arial";
+                            ctx.textAlign = "left";
+
                             var h = textHeight + 3;
                             var w = ctx.measureText(value.From).width;
 
@@ -211,8 +227,16 @@
         }
 
         // Initialize the canvas settings //
-        var init = function (boardColumns, startAtSunday, dayStarts, dayEnds, lessons) {
+        var init = function (canvasObj, boardColumns, startAtSunday, dayStarts, dayEnds, lessons) {
             titles = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+            canvasObj = canvasObj || null;
+
+            if (canvasObj) {
+                canvas = canvasObj;
+                ctx = canvas.getContext("2d");
+                textHeight = ctx.measureText("_").width;
+            } else return null;
 
             if (boardColumns > 0 && boardColumns <= 7)
                 numberOfColumns = boardColumns;
