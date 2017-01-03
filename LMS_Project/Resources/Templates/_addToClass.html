@@ -9,7 +9,7 @@
                 <!-- display classes in here -->
 
                 <ul class="col-xs-12 select-list">
-                    <li class="col-xs-12" ng-repeat="Class in Classes" ng-click="SelectCLass(Class)" ng-class="{ 'active' : Class.Name == SelectedClass.Name }">{{Class.Name}}</li>
+                    <li class="col-xs-12" ng-repeat="Class in Classes" ng-click="SelectClass(Class)" ng-class="{ 'active' : Class.Name == SelectedClass.Name }" title="Select class">{{Class.Name}}</li>
                 </ul>
             </div>
         </div>
@@ -21,7 +21,7 @@
                 <!-- display students in here -->
 
                 <ul class="col-xs-12 select-list">
-                    <li ng-repeat="Student in Students" ng-click="Add(Student)">{{Student.Lastname}} {{Student.Firstname}}, {{Student.SSN}}</li>
+                    <li ng-repeat="Student in Students" ng-click="Add(Student)" title="Add {{Student.Firstname}} to class {{SelectedClass.Name}}">{{Student.Lastname}} {{Student.Firstname}}, {{Student.SSN}}</li>
                 </ul>
             </div>
         </div>
@@ -37,7 +37,10 @@
                 <ul class="col-xs-12 select-list">
                     <li ng-repeat="Student in SelectedClass.Students" class="col-xs-12 no-hover">
                         <div class="col-xs-10">{{Student.Firstname}} {{Student.Lastname}}, {{Student.SSN}}</div>
-                        <div class="col-xs-2 text-danger action" ng-click="Remove(Student)">Remove</div>
+                        <div class="col-xs-2 action" ng-click="Remove(Student)" title="Remove {{Student.Firstname}} from class {{SelectedClass.Name}}">
+                            <i class="fa fa-trash text-danger transition" aria-hidden="true"></i>
+                            <span class="text-danger">Remove</span>
+                        </div>
                     </li>
                 </ul>
             </div>
