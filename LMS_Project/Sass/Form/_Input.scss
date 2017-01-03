@@ -17,6 +17,20 @@
         border-radius: 0 !important;
     }
 
+    .input-group
+    {
+        select
+        {
+            + .input-group-addon
+            {
+                .fa
+                {
+                    color: $success-color;
+                }
+            }
+        }
+    }
+
     input
     {
         &[type=text],
@@ -29,7 +43,7 @@
             &:focus
             {
                 border: 1px solid $main-color;
-                border-right: 1px solid #CCCCCC;
+                border-right: 1px solid $border-color-default;
 
                 & + .input-group-addon
                 {

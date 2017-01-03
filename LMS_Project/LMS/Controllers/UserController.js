@@ -24,14 +24,14 @@
         
 
         $scope.user = {
-            Firstname: "Klas",
-            Lastname: "Claywuald",
-            SSN: "456456564",
-            Phonenumber: "564654564",
-            Email: "test2@test.com",
-            Password: "Test@123",
-            ConfirmPassword: "Test@123",
-            UserRole: null
+            //Firstname: "Klas",
+            //Lastname: "Claywuald",
+            //SSN: "456456564",
+            //Phonenumber: "564654564",
+            //Email: "test2@test.com",
+            //Password: "Test@123",
+            //ConfirmPassword: "Test@123",
+            //UserRole: null
         };
 
         
