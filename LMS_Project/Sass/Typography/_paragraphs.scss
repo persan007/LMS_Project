@@ -63,3 +63,49 @@ a
         color: $loading-color;
     }
 }
+
+.padding
+{
+    $value: 10px;
+    padding: $value;
+
+    &-top-bottom
+    {
+        padding-top: $value;
+        padding-bottom: $value;
+    }
+
+    &-left-right
+    {
+        padding-left: $value;
+        padding-right: $value;
+    }
+}
+
+.margin
+{
+    $value: 10px;
+    margin: $value;
+
+    &-top-bottom
+    {
+        margin-top: $value;
+        margin-bottom: $value;
+    }
+
+    &-left-right
+    {
+        margin-left: $value;
+        margin-right: $value;
+    }
+}
+
+.text-danger
+{
+    color: $warning-color;
+}
+
+.text-success
+{
+    color: $success-color
+}
