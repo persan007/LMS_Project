@@ -422,7 +422,7 @@ namespace LMS_Project.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAngularAntiForgery]
         public bool LogOff()
         {
             if(User.Identity.IsAuthenticated)

@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var NavigationController = function ($scope, Request, $route) {
+    var NavigationController = function ($scope, Request, $window) {
 
         var SearchFiler = function () {
             // TODO: Hitta all kurser, lärare mm  som matchar sökresultatet. (Akronym?)
@@ -8,8 +8,14 @@
         }
 
         var LogOut = function () {
-            Request.Make("/Account/LogOff/", "post").then(function (data) {
-                $route.reload();
+            Request.Make("/Account/GetAntiForgeryToken/", "get").then(function (token) {
+                Request.Make("/Account/LogOff/", "post", null, null, { 'RequestVerificationToken': token }).then(function (data) {
+                    data = JSON.parse(String(data).toLowerCase());
+
+                    if (data) {
+                        $window.location.reload();
+                    }
+                });
             });
         }
 
@@ -27,7 +33,7 @@
     LMSApp.controller("NavigationController", [
         "$scope",
         "Request",
-        "$route",
+        "$window",
         NavigationController
     ]);
 
