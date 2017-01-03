@@ -196,6 +196,8 @@ namespace LMS_Project.Controllers
             return View(model);
         }
 
+        //
+        // GET: /Account/GetAntiForgeryToken
         public string GetAntiForgeryToken()
         {
             string cookieToken, formToken, result;
