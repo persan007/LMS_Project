@@ -8,7 +8,10 @@ LMSApp.config(["$routeProvider", function ($routeProvider) {
 
     $routeProvider
         .when("/", {
-            templateUrl: basePath + "_main.html"
+            templateUrl: basePath + "_courses.html"
+        })
+        .when("/Courses/", {
+            templateUrl: basePath + "_courses.html"
         })
         .when("/User/Add/", {
             controller: "UserController",
