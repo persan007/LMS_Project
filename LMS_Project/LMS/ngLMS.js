@@ -1,6 +1,6 @@
 ﻿
 // Init angular application (global)
-var LMSApp = angular.module("LMS-app", ['ngRoute']);
+var LMSApp = angular.module("LMS-app", ['ngRoute', 'ngAnimate']);
 
 // Init angular routing
 LMSApp.config(["$routeProvider", function ($routeProvider) {
@@ -29,7 +29,6 @@ LMSApp.config(["$routeProvider", function ($routeProvider) {
             templateUrl: basePath + "_404.html"
         });
 }]);
-
 
 // Animate navigation menu
 window.onload = function () {
