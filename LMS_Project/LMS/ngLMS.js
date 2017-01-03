@@ -18,6 +18,10 @@ LMSApp.config(["$routeProvider", function ($routeProvider) {
             controller: "ScheduleController",
             templateUrl: basePath + "_schedule.html"
         })
+        .when("/Class/Add/", {
+            controller: "AddToClassController",
+            templateUrl: basePath + "_addToClass.html"
+        })
         .otherwise({
             templateUrl: basePath + "_404.html"
         });
