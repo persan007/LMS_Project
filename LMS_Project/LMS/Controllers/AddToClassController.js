@@ -30,7 +30,7 @@
 
         $scope.Add = addToClass;
         $scope.Remove = removeFromClass;
-        $scope.SelectCLass = selectClass;
+        $scope.SelectClass = selectClass;
 
         $scope.SelectedClass;
         $scope.Classes = [
