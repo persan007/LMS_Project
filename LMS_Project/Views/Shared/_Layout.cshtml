@@ -6,8 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title | LMS</title>
 
+        <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/sweetalert2@6.2.1(sweetalert2.min.css),sweetalert2@6.2.9(sweetalert2.min.css)">
+
         <!-- Render page stylesheets -->
         @Styles.Render("~/Content/css")
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/g/sweetalert2@6.2.1,sweetalert2@6.2.9"></script>
 
         <!-- Render angular/custom scripts -->
         @Scripts.Render("~/bundles/core")
