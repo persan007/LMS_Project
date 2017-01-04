@@ -1,60 +1,61 @@
 ﻿(function () {
-    var UserController = function ($scope, Request) {
+
+    var UserController = function ($scope, Request, Popup) {
 
         var sendForm = function (isValid) {
             if (isValid) {
-                alert('our form is amazing');
-                console.log($scope.user);
                 Request.Make("/Account/GetAntiForgeryToken/", "post").then(function (token) {
-                    Request.Make("/Account/Register/", "post", JSON.stringify($scope.user), null, { 'RequestVerificationToken': token }).then(function (info) {
-                        if (Request.Status != 200) {
-                            console.log("Error: " + info);
+                    Request.Make("/Account/Register/", "post", JSON.stringify($scope.user), null, { 'RequestVerificationToken': token.data }).then(function (res) {
+                        if (res.status.error) {
+                            var fields = JSON.parse(res.message);
+                            delete fields["$id"];
+
+                            angular.forEach(fields, function (value, key) {
+                                if (value.length != 0) {
+                                    $scope.registerForm[key].valueUsedMessage = value.join("<br>");
+                                    $scope.registerForm[key].$setValidity("valueUsed", false);
+                                }
+                            });
                         }
                         else {
-                            console.log("All good");
+                            Popup.Message("Added!", "New user " + $scope.user.firstname + " has been added.", Popup.types.ok, {
+                                timer: 5000
+                            }).then(function (response) {
+                                angular.copy($scope.user, $scope.copyUser);
+                                $scope.user = {}
+                                $scope.user.userRole = $scope.copyUser.userRole;
+                            });
                         }
                     });
                 });
             }
             else
             {
-                alert('The form is missing some stuff');
+                Popup.Message("Sorry", "You need to enter all information before you can add a new user.", Popup.types.error, {
+                    confirmText: "Okey"
+                }).then(function (response) {
+                    if (response != false) {
+                        $scope.user.password = "";
+                        $scope.user.confirmpassword = "";
+                    }
+                });
             }
-
-             //DummyUser
-             //Request.Make("/Account/GetAntiForgeryToken/", "post").then(function (data) {
-             //    Request.Make("/Account/Register/", "post", JSON.stringify(DummyUser), null, { 'RequestVerificationToken': data }).then(function (data) {
-             //        console.log(data);
-             //    });
-             //});
         }
 
-        Request.Make("/Home/GetAllRoleNames/", "get").then(function (data) {
-            $scope.user.UserRole = data[0];
-            $scope.roles = data;
+        Request.Make("/Data/GetAllRoleNames/", "get").then(function (res) {
+            $scope.user.userRole = res.data[0];
+            $scope.roles = res.data;
         });
 
-        
-
         $scope.user = {};
-
-        //var DummyUser = {
-        //    Firstname: "Klas",
-        //    Lastname: "Claywuald",
-        //    SSN: "456456564",
-        //    Phonenumber: "564654564",
-        //    Email: "test2@test.com",
-        //    Password: "Test@123",
-        //    ConfirmPassword: "Test@123",
-        //    UserRole: "Teacher"
-        //};
-
-        
         $scope.SendForm = sendForm;
     }
+
     LMSApp.controller("UserController", [
         "$scope",
         "Request",
+        "Popup",
         UserController
     ]);
+
 }());
