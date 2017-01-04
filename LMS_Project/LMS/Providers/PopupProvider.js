@@ -1,7 +1,7 @@
 ﻿/*
 ** PopupProvider made by Kristoffer Lindström
 ** 
-** Version 0.2.0
+** Version 0.2.2
 **
 ** Copyright 2017
 **
@@ -15,11 +15,11 @@
 **
 **
 ** Modal window types :
-**  * Ok        - Displays a green checkmark
-**  * Error     - Displays a red cross
-**  * Warning   - Displays a orange exclamation mark
-**  * Info      - Displays a blue information symbol (i)
-**  * Question  - Displays a gray question mark
+**  * ok        - Displays a green checkmark
+**  * error     - Displays a red cross
+**  * warning   - Displays a orange exclamation mark
+**  * info      - Displays a blue information symbol (i)
+**  * question  - Displays a gray question mark
 **
 **
 ** Modal window options :
@@ -31,6 +31,7 @@
 **
 **
 ** Modal input types
+**  * null          - Hides textbox                                                             ~Default~
 **  * text          - Displays a textbox
 **  * email         - Displays a textbox with email validation
 **  * password      - Displays a textbox with hidden characters (*)
@@ -52,12 +53,12 @@
     var PopupProvider = function () {
         var ti, m, ty, opt;
 
-        var types = {
-            Ok: "success",
-            Error: "Error",
-            Warning: "warning",
-            Info: "info",
-            Question: "question"
+        var msgTypes = {
+            ok: "success",
+            error: "error",
+            warning: "warning",
+            info: "info",
+            question: "question"
         }
 
         // Message setup //
@@ -103,7 +104,7 @@
         // Provider access values //
         return {
             Message: msg,
-            Types: types
+            types: msgTypes
         };
     }
 
