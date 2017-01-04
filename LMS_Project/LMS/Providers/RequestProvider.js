@@ -1,12 +1,19 @@
 ﻿(function () {
     var RequestProvider = function ($http) {
-        var status = null;
 
         // If an error occurs display it in the console
         var OnError = function (response) {
-            console.error("Error: " + response.statusText);
-            status = response.status;
-            return response;
+            console.error("RequestProvider Error >> " + response.status + " >> (" + response.statusText + ")");
+
+            return {
+                data: null,
+                message: response.statusText,
+                status: {
+                    ok: (response.status <= 201) ? true : false,
+                    error: (response.status > 201) ? true : false,
+                    code: response.status
+                }
+            };
         }
 
         // Returns the data obj from server
@@ -39,13 +46,20 @@
                 headers: HEADERS,
                 transformRequest: angular.identity
             }).then(function (response) {
-                return response.data;
+                return {
+                    data: response.data,
+                    message: response.statusText,
+                    status: {
+                        ok: (response.status <= 201) ? true : false,
+                        error: (response.status > 201) ? true : false,
+                        code: response.status
+                    }
+                };
             }, OnError);
         }
 
         return {
-            Make: make,
-            Status: status
+            Make: make
         };
     }
 
