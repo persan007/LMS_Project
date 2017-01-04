@@ -4,7 +4,7 @@
     <form method="post" name="registerForm" ng-submit="SendForm(registerForm.$valid)" class="row col-xs-12" novalidate>
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group" ng-class="{ 'has-error' : registerForm.user.Firstname.$invalid && !registerForm.user.Firstname.$pristine }">
-                <input type="text" class="form-control input-lg" name="Firstname" id="firstname" placeholder="Firstname" ng-model="user.Firstname" ng-pattern="/^[a-z|å|ä|öA-Z|Å|Ä|Ö-]*$/" ng-minlength="1" ng-maxlength="50" required />
+                <input type="text" class="form-control input-lg" name="Firstname" id="firstname" placeholder="Firstname" ng-model="user.Firstname" ng-pattern="/^([a-z]|å|ä|ö| |[A-Z]|Å|Ä|Ö|-])+$/" ng-minlength="1" ng-maxlength="50" required />
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-pencil center-icon-block" aria-hidden="true"></i>
                     <div class="help-block info">
@@ -17,7 +17,7 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" name="Lastname" id="lastname" placeholder="Lastname" ng-model="user.Lastname" ng-pattern="/^[a-z|å|ä|öA-Z|Å|Ä|Ö-]*$/" required />
+                <input type="text" class="form-control input-lg" name="Lastname" id="lastname" placeholder="Lastname" ng-model="user.Lastname" ng-pattern="/^([a-z]|å|ä|ö| |[A-Z]|Å|Ä|Ö|-])+$/" ng-minlength="1" ng-maxlength="50" required />
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-pencil center-icon-block" aria-hidden="true"></i>
                     <div class="help-block info">
@@ -30,7 +30,7 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <input type="text" class="form-control input-lg" name="SSN" id="SSN" placeholder="SSN" ng-model="user.SSN" ng-pattern="/^[0-9]*$/" ng-minlength="12" ng-maxlength="12" required />
+                <input type="text" class="form-control input-lg" name="SSN" id="SSN" placeholder="SSN" ng-model="user.SSN" ng-pattern="/^[0-9]{12}$/" ng-minlength="12" ng-maxlength="12" required />
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-key center-icon-block" aria-hidden="true"></i>
                     <div class="help-block info">
@@ -71,7 +71,7 @@
 
         <div class="form-group col-sm-6 col-xs-12">
             <div class="input-group">
-                <select class="form-control input-lg" name="UserRole" id="UserRole" ng-model="user.UserRole" ng-options="role.Id as role.Name for role in roles"></select>
+                <select class="form-control input-lg" name="UserRole" id="UserRole" ng-model="user.UserRole" ng-options="role for role in roles"></select>
                 <div class="input-group-addon">
                     <i class="fa fa-lg fa-universal-access center-icon-block" aria-hidden="true"></i>
                 </div>
@@ -106,7 +106,7 @@
         <!--<input id="antiForgeryToken" data-ng-model="antiForgeryToken" type="hidden" value="{{token}}" />-->
 
         <div class="form-group col-sm-6 col-sm-push-6 col-xs-12 col-xs-push-0">
-            <button type="submit" ng-model="formSubmit" class="col-sm-6 col-sm-push-6 col-xs-12 col-xs-push-0" ng-disabled="registerForm.$invalid">
+            <button type="submit" ng-model="formSubmit" class="col-sm-6 col-sm-push-6 col-xs-12 col-xs-push-0">
                 <i class="fa fa-lg fa-plus fa-lg" aria-hidden="true"></i>
                 <span>Add new</span>
             </button>
