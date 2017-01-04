@@ -3,7 +3,7 @@
     var NavigationController = function ($scope, Request, $window) {
 
         var SearchFiler = function () {
-            // TODO: Hitta all kurser, lärare mm  som matchar sökresultatet. (Akronym?)
+            // TODO: Hitta alla kurser, lärare mm  som matchar sökresultatet. (Akronym?)
             //console.log("Search term: " + $scope.SearchText);
         }
 
