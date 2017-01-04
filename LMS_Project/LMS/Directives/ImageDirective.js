@@ -4,17 +4,18 @@
 
         var bind = function (scope, element, attributes) {
             scope.$watch("bgImage", function (url) {
-                element.css({
-                    'background-image': 'url(' + url + ')',
-                    'background-size': 'cover'
-                });
+                if (angular.isDefined(url)) {
+                    element.css({
+                        'background-image': 'url(' + url + ')',
+                        'background-size': 'cover'
+                    });
+                }
             });
         };
 
         return {
-            scope: {
-                bgImage: "="
-            },
+            restrict: "A",
+            scope: { bgImage: "=" },
             link: bind
         };
 
