@@ -44,7 +44,8 @@
 
 input 
 {
-    &.ng-touched
+    &.ng-touched,
+    &.valueUsed
     {
         &.ng-invalid
         {
