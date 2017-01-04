@@ -423,6 +423,7 @@ namespace LMS_Project.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAngularAntiForgery]
         public bool LogOff()
         {
