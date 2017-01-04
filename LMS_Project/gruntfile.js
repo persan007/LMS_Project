@@ -12,8 +12,12 @@ module.exports = function (grunt) {
             }
         },
         uglify: {
-            core: { files: { 'project.core.min.js': ['Scripts/angular.js', 'LMS/*.js', 'LMS/**/*.js'] } },
-            vendor: { files: { 'project.vendor.min.js': ['Scripts/jquery-1.10.2.min.js', 'Scripts/bootstrap.js'] } }
+            options: {
+                sourceMap: true
+            },
+            core: { files: { 'project.core.min.js': ['LMS/*.js', 'LMS/**/*.js'] } },
+            angular: { files: { 'project.angular.min.js': ['Scripts/angular.js', 'Scripts/angular-route.js', 'Scripts/angular-animate.min.js', ] } },
+            vendor: { files: { 'project.vendor.min.js': ['Scripts/jquery-3.1.1.js', 'Scripts/bootstrap.js'] } }
         },
         watch: {
             assets: { files: ['Sass/**/*.scss'], tasks: ['sass'] },

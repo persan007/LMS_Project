@@ -20,9 +20,12 @@
                 padding: 10px 20px;
                 color: $text-color-light;
 
-                &:hover
+                &:hover,
+                &:focus,
+                &:active
                 {
                     background: $background-dark;
+                    text-decoration: none;
 
                     .fa
                     {

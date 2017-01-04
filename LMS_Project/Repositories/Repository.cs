@@ -1,4 +1,5 @@
 ﻿using LMS_Project.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -153,6 +154,24 @@ namespace LMS_Project.Repositories
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Returns an array of all LessonModels in the database
+        /// </summary>
+        /// <returns></returns>
+        public LessonModels[] GetAllLessons()
+        {
+            return db.Lessons.ToArray();
+        }
+
+        /// <summary>
+        /// Returns an array with the names of the roles in the database
+        /// </summary>
+        /// <returns></returns>
+        public List<IdentityRole> GetAllRoles()
+        {
+            return db.Roles.ToList();      
         }
     }
 }

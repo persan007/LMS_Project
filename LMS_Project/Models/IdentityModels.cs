@@ -13,7 +13,7 @@ namespace LMS_Project.Models
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string ProfileImage { get; set; }
-        public string Persnr { get; set; }
+        public string SSN { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -27,11 +27,10 @@ namespace LMS_Project.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<FileObjectModels> FilesObjects { get; set; }
-
-        public DbSet<SchoolClassModels> SchoolClasses { get; set; }
-
-        //public DbSet<CourseModels> Courses { get; set; }
+        public DbSet<FileObjectModels>  FilesObjects    { get; set; }
+        public DbSet<LessonModels>      Lessons         { get; set; }
+        public DbSet<CourseModels>      Courses         { get; set; }
+        public DbSet<SchoolClassModels> SchoolClasses   { get; set; }
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) {}
 

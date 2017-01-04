@@ -9,8 +9,14 @@
 LMS_Project/Scripts/_references.js
 LMS_Project/project.core.min.js
 LMS_Project/project.vendor.min.js
+LMS_Project/project.angular.min.js
+LMS_Project/project.core.min.js.map
+LMS_Project/project.vendor.min.js.map
+LMS_Project/project.angular.min.js.map
 LMS_Project/style.css
 LMS_Project/style.css.map
+LMS_Project/Migrations/
+LMS_Project/Scripts/_references.js
 
 # Build results
 [Dd]ebug/

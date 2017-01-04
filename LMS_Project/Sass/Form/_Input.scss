@@ -1,8 +1,10 @@
 ﻿.form-group
 {
-    & + .form-group
-    {
-        margin-top: 20px;
+    @media (max-width: $screen-sm-min) {
+        & + &
+        {
+            margin-top: 20px;
+        }
     }
 
     label
@@ -10,9 +12,23 @@
         cursor: pointer;
     }
 
-    input, button
+    input, button, select
     {
         border-radius: 0 !important;
+    }
+
+    .input-group
+    {
+        select
+        {
+            + .input-group-addon
+            {
+                .fa
+                {
+                    color: $success-color;
+                }
+            }
+        }
     }
 
     input
@@ -27,7 +43,7 @@
             &:focus
             {
                 border: 1px solid $main-color;
-                border-right: 1px solid #CCCCCC;
+                border-right: 1px solid $border-color-default;
 
                 & + .input-group-addon
                 {
