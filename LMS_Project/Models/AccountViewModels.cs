@@ -65,7 +65,7 @@ namespace LMS_Project.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress(ErrorMessage = "Invalid email")]
+        [EmailAddress(ErrorMessage = "Invalid email.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
