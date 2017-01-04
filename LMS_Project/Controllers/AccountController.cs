@@ -14,6 +14,8 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Helpers;
+using LMS_Project.Repositories;
+using Newtonsoft.Json;
 
 
 namespace LMS_Project.Controllers
@@ -24,6 +26,7 @@ namespace LMS_Project.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationDbContext _context;
+        private Repository _repo = new Repository();
 
         public AccountController()
         {
@@ -154,20 +157,23 @@ namespace LMS_Project.Controllers
         
         // POST: /Account/Register
         [HttpPost]
-        [Authorize]
-        //[AllowAnonymous]
         [ValidateAngularAntiForgery]
-        //[ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<string> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
+                if (_repo.CheckUserExistance(model))
+                {
+                    Response.StatusCode = 310;
+                    return "Sary, user exists";
+                }
+                    
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Firstname = model.Firstname, Lastname = model.Lastname, SSN = model.SSN, PhoneNumber = model.PhoneNumber  };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
                     await this.UserManager.AddToRoleAsync(user.Id, model.UserRole);
 
                     // Create handlers //
@@ -186,17 +192,16 @@ namespace LMS_Project.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return "OKQ8";
                 }
 
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return "Nope";
         }
 
-        //
         // GET: /Account/GetAntiForgeryToken
         [AllowAnonymous]
         public string GetAntiForgeryToken()
@@ -207,7 +212,6 @@ namespace LMS_Project.Controllers
             return result;
         }
 
-        //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
