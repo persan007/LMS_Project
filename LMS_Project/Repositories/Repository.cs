@@ -1,11 +1,16 @@
 ﻿using LMS_Project.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace LMS_Project.Repositories
@@ -172,6 +177,19 @@ namespace LMS_Project.Repositories
         public List<IdentityRole> GetAllRoles()
         {
             return db.Roles.ToList();      
+        }
+
+        public List<string> GetAllRoleNames()
+        {
+            return db.Roles.Select(o => o.Name).ToList();
+        }
+
+        public bool CheckUserExistance(RegisterViewModel model)
+        {
+            if (db.Users.Where(u => u.SSN == model.SSN || u.Email == model.Email || u.PhoneNumber == model.PhoneNumber).Any())
+                return true;
+
+            return false;
         }
     }
 }
