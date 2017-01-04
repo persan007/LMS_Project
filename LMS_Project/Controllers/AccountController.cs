@@ -143,6 +143,7 @@ namespace LMS_Project.Controllers
         
 
         // GET: /Account/Register
+        [AllowAnonymous]
         public ActionResult Register()
         {
             ViewBag.UserRole = new SelectList(_context.Roles.ToList(), "Name", "Name");
@@ -152,6 +153,7 @@ namespace LMS_Project.Controllers
         
         // POST: /Account/Register
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
