@@ -10,7 +10,8 @@ LMSApp.config(["$routeProvider", function ($routeProvider) {
         .when("/", {
             templateUrl: basePath + "_courses.html"
         })
-        .when("/Courses/", {
+        .when("/Courses/:lessonName?", {
+            controller: "CourseController",
             templateUrl: basePath + "_courses.html"
         })
         .when("/User/Add/", {
