@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using LMS_Project.Repositories;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace LMS_Project.Controllers
 {
@@ -17,6 +18,12 @@ namespace LMS_Project.Controllers
     public class HomeController : Controller
     {
         private Repository _repo = new Repository();
+        private ApplicationDbContext _context;
+
+        public HomeController()
+        {
+            this._context = new ApplicationDbContext();
+        }
 
         public ActionResult Index()
         {
@@ -69,6 +76,66 @@ namespace LMS_Project.Controllers
             }).Where(o => o.Id == User_id);
 
             return JsonConvert.SerializeObject(CurrentUser, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult AddSchoolClass()
+        {                       
+            var UserStore = new UserStore<ApplicationUser>(_context);
+            var UserManager = new UserManager<ApplicationUser>(UserStore);
+            
+            List<ApplicationUser> students = new  List<ApplicationUser>();
+            
+            foreach (var user in UserManager.Users.ToList())
+            {
+                if (UserManager.IsInRole(user.Id, "Student"))
+                {
+                    students.Add(user);
+                }
+            }
+           
+            ViewBag.Students = new SelectList(students, "Id","Lastname");
+
+            //------------------------------
+                        
+            List<SchoolClassModels> schoolClasses = new List<SchoolClassModels>();
+            schoolClasses = _context.SchoolClasses.ToList();
+            
+            ViewBag.SchoolClasses = new SelectList(schoolClasses, "SchoolClassID", "Name");
+
+            //------------------------------
+
+            schoolClasses.ElementAt(0).Students.Add(students.First());
+            List<ApplicationUser> schoolClassStudents = new List<ApplicationUser>();
+            var schoolClassName = "Chemistry";
+            
+            foreach (var schoolClass in _context.SchoolClasses.ToList())
+            {
+                if (schoolClass.Name == schoolClassName)
+                {
+                    schoolClassStudents = schoolClass.Students.ToList();
+                }
+            }
+
+
+            ViewBag.SchoolClassStudents = new SelectList(schoolClassStudents, "Id", "Lastname");
+            
+            return View();
+
+            //var db = new ApplicationDbContext();
+            //List<ApplicationUser> users = db.Users.ToList();
+            //var roleStore = new RoleStore<IdentityRole>(_context);
+            //var roleManager = new RoleManager<IdentityRole>(roleStore);           
+            //IdentityRole role = roleManager.FindByName("Student");
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult AddSchoolClass(string SchoolClasses, string Students)
+        {
+             
+            return View();           
         }
     }
 }
