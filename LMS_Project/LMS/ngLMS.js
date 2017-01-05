@@ -26,6 +26,10 @@ LMSApp.config(["$routeProvider", "$locationProvider", function ($routeProvider, 
             controller: "AddToClassController",
             templateUrl: basePath + "_addToClass.html"
         })
+        .when("/File/TempPage/", {
+            controller: "FileController",
+            templateUrl: basePath + "_fileUpload.html"
+        })
         .otherwise({
             templateUrl: basePath + "_404.html"
         });
