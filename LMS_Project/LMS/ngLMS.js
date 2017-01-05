@@ -1,6 +1,6 @@
 ﻿
 // Init angular application (global)
-var LMSApp = angular.module("LMS-app", ['ngRoute', 'ngAnimate']);
+var LMSApp = angular.module("LMS-app", ['ngRoute', 'ngAnimate', 'ngMessages']);
 
 // Init angular routing
 LMSApp.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
