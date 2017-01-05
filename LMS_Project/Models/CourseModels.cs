@@ -22,6 +22,8 @@ namespace LMS_Project.Models
 
         public virtual ICollection<ApplicationUser> Teachers { get; set; }
 
+        public virtual ICollection<SchoolClassModels> SchoolClasses { get; set; }
+
         public virtual ConsoleColor DisplayColor { get; set; }
 
         public CourseModels()

@@ -1,6 +1,6 @@
 ﻿(function () {
 
-    var NavigationController = function ($scope, Request, $window) {
+    var NavigationController = function ($scope, Request, $window, Popup) {
 
         var SearchFiler = function () {
             // TODO: Hitta alla kurser, lärare mm  som matchar sökresultatet. (Akronym?)
@@ -19,6 +19,11 @@
             });
         }
 
+        // Test
+        Popup.Upload("My title", "Upload new file in this module", null, { enableCancel: true }).then(function (info) {
+            console.log(info);
+        });
+
         Request.Make("/Data/GetUserInformation/", "get").then(function (res) {
             $scope.User = res.data[0];
             $scope.User.Role = ((res.data[0].Role === "Teacher") ? true : false);
@@ -34,6 +39,7 @@
         "$scope",
         "Request",
         "$window",
+        "Popup",
         NavigationController
     ]);
 

@@ -150,3 +150,28 @@
         }
     }
 }
+
+.dragAndDropBox
+{
+    height: 100%;
+    margin: 10px auto 0 auto;
+    border: 2px dashed $border-color-default;
+    display: table;
+
+    &:after
+    {
+        content: "";
+        display: block;
+        padding-top: 50%;
+    }
+
+    &:before
+    {
+        content: "Drop file...";
+        text-transform: uppercase;
+        font-size: 40px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
+}

@@ -11,19 +11,21 @@ namespace LMS_Project.Models
         [Key]
         public string SchoolClassID { get; set; }
 
-        public ICollection<ApplicationUser> Students { get; set; }
+        public string Name { get; set; }
 
-        public ICollection<LessonModels> Lessons { get; set; }
+        public virtual ICollection<ApplicationUser> Students { get; set; }
 
-        public virtual CourseModels Course { get; set; }
+        public virtual ICollection<LessonModels> Lessons { get; set; }
+
+        public virtual ICollection<CourseModels> Courses { get; set; }
 
         public SchoolClassModels()
         { }
 
-        public SchoolClassModels(ICollection<ApplicationUser> students, CourseModels course, ICollection<LessonModels> lessons)
+        public SchoolClassModels(ICollection<ApplicationUser> students, ICollection<CourseModels> courses, ICollection<LessonModels> lessons)
         {
             this.Students   = students;
-            this.Course     = course;
+            this.Courses     = courses;
             this.Lessons    = lessons;
         }
 
@@ -32,9 +34,9 @@ namespace LMS_Project.Models
             this.Students = students;
         }
 
-        public void SetCourse(CourseModels course)
+        public void SetCourse(ICollection<CourseModels> courses)
         {
-            this.Course = course;
+            this.Courses = courses;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LMS_Project.Models
 {
@@ -14,6 +15,11 @@ namespace LMS_Project.Models
         public string Lastname { get; set; }
         public string ProfileImage { get; set; }
         public string SSN { get; set; }
+
+        [ForeignKey("SchoolClassModels")]
+        public string SchoolClassModelId { get; set; }
+
+        public virtual SchoolClassModels SchoolClassModels { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
