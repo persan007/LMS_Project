@@ -51,8 +51,6 @@
     var app = LMSApp;
     
     var PopupProvider = function () {
-        var ti, m, ty, opt;
-
         var msgTypes = {
             ok: "success",
             error: "error",
@@ -63,11 +61,13 @@
 
         // Message setup //
         var msg = function (TITLE, MESSAGE, TYPE, OPTIONS) {
-            ti  = TITLE || null;
-            m   = MESSAGE || null;
-            ty  = TYPE || null;
+            var props = Validate({
+                "title": TITLE,
+                "message": MESSAGE,
+                "type": TYPE
+            });
 
-            opt = Object.assign({
+            OPTIONS = Object.assign({
                 timer: null,
                 enableCancel: false,
                 confirmText: "Confirm",
@@ -75,15 +75,72 @@
                 classes: ""
             }, OPTIONS);
 
-            // Make message popup //
-            return DisplayMessage();
+            // Make message show //
+            return DisplayMessage(props["title"], props["message"], props["type"], OPTIONS);
+        }
+
+        // File upload modal window //
+        var uploadModel = function (TITLE, INSTRUCTIONS, TYPE, OPTIONS) {
+            var props = Validate({
+                "title": TITLE,
+                "instructions": INSTRUCTIONS,
+                "type": TYPE
+            });
+
+            OPTIONS = Object.assign({
+                dragAndDrop: false,
+                allowedFileTypes: ["jpg", "png", "bmp"],
+                enableCancel: false,
+                confirmText: "Upload",
+                classes: ""
+            }, OPTIONS);
+
+            // Make modal show //
+            FileHandler(props["title"], props["message"], props["type"], OPTIONS);
+        }
+
+        // Validate inputs //
+        function Validate(OBJECT) {
+            var tmp = angular.copy(OBJECT);
+
+            angular.forEach(tmp, function (value, key) {
+                OBJECT[key] = (value == null || value == "" || String(value).toLowerCase() == "undefined") ? null : value;
+            });
+
+            return OBJECT;
+        }
+
+        // Display the filehandler //
+        function FileHandler(ti, me, ty, opt) {
+            return swal({
+                title: ti,
+                html:
+                    "<p>" + me + "</p>" + 
+                    (opt["dragAndDrop"]) ? "<div class='row'>" + 
+                        "<div class='dragAndDropBox col-xs-6' id='popupDrop'></div>" +
+                        "<input type='file' class='swal2-file col-xs-5 col-xs-offset-1'>" +
+                    "</div>" : "",
+                type: ty,
+                width: "80vw",
+                showCancelButton: opt["enableCancel"],
+                confirmButtonText: opt["confirmText"],
+                customClass: opt["classes"]
+            }).then(function (result) {
+
+                return result;
+
+            }, function (dismiss) {
+
+                return "Closed by " + dismiss;
+
+            }).catch(swal.noop);
         }
 
         // Display the message //
-        function DisplayMessage() {
+        function DisplayMessage(ti, me, ty, opt) {
             return swal({
                 title: ti,
-                text: m,
+                text: me,
                 type: ty,
                 timer: opt["timer"],
                 input: opt["inputType"],
@@ -104,6 +161,7 @@
         // Provider access values //
         return {
             Message: msg,
+            Upload: uploadModel,
             types: msgTypes
         };
     }
