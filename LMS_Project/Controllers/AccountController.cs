@@ -14,6 +14,10 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web.Helpers;
+using LMS_Project.Repositories;
+using Newtonsoft.Json;
+using System.Net;
+using Newtonsoft.Json.Serialization;
 
 
 namespace LMS_Project.Controllers
@@ -24,10 +28,18 @@ namespace LMS_Project.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationDbContext _context;
+        private Repository _repo;
+        private JsonSerializerSettings _jsonSettings;
 
         public AccountController()
         {
             this._context = new ApplicationDbContext();
+            this._repo = new Repository();
+            this._jsonSettings = new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -154,49 +166,39 @@ namespace LMS_Project.Controllers
         
         // POST: /Account/Register
         [HttpPost]
-        [Authorize]
-        //[AllowAnonymous]
         [ValidateAngularAntiForgery]
-        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Firstname = model.Firstname, Lastname = model.Lastname, SSN = model.SSN, PhoneNumber = model.PhoneNumber  };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                Dictionary<string, string[]> errorList = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
 
-                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRole);
-
-                    // Create handlers //
-                    //var UserStore = new UserStore<ApplicationUser>(_context);
-                    //var UserManager2 = new UserManager<ApplicationUser>(UserStore);
-                    // Set temp user role to teacher //
-                    //UserManager.AddToRole(user.Id, model.UserRole);
-
-                    // Save all changes //
-                    //_context.SaveChanges();
-                   
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-
-                AddErrors(result);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(errorList, Formatting.None, _jsonSettings));
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            if (_repo.CheckUserExistance(model))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "User credential exists");
+            } 
+
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Firstname = model.Firstname, Lastname = model.Lastname, SSN = model.SSN, PhoneNumber = model.PhoneNumber  };
+            var result = await UserManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                await this.UserManager.AddToRoleAsync(user.Id, model.UserRole);
+                return new HttpStatusCodeResult(HttpStatusCode.Created, "User created");
+            }
+
+            AddErrors(result);
+            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "User could not be created");
         }
 
-        //
         // GET: /Account/GetAntiForgeryToken
         [AllowAnonymous]
         public string GetAntiForgeryToken()
@@ -207,7 +209,6 @@ namespace LMS_Project.Controllers
             return result;
         }
 
-        //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)

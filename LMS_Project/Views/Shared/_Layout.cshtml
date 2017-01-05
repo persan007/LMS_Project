@@ -6,17 +6,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title | LMS</title>
 
-        <!-- Render page stylesheets -->
-        @Styles.Render("~/Content/css")
-
-        <!-- Render angular/custom scripts -->
-        @Scripts.Render("~/bundles/core")
-
         <!-- Render fontawesome icons -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
         <!-- Render ionicons icons -->
-        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+        <!-- SweetAlert2 CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/g/sweetalert2@6.2.1(sweetalert2.min.css),sweetalert2@6.2.9(sweetalert2.min.css)">
+
+        <!-- Render page stylesheets -->
+        <link rel="stylesheet" href="~/style.css" />
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/g/sweetalert2@6.2.1,sweetalert2@6.2.9"></script>
+
+        <!-- Render angular scripts -->
+        <script src="~/project.angular.min.js"></script>
+
+        <!-- Render core scripts -->
+        <script src="~/project.core.min.js"></script>
     </head>
 
     <body>
@@ -27,7 +36,8 @@
         </div>
 
         <!-- Render jQuery and Bootstrap.js -->
-        @Scripts.Render("~/bundles/vendor")
+        <script src="~/project.vendor.min.js"></script>
+
         @RenderSection("scripts", required: false)
     </body>
 </html>

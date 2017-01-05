@@ -3,14 +3,15 @@
 var LMSApp = angular.module("LMS-app", ['ngRoute', 'ngAnimate']);
 
 // Init angular routing
-LMSApp.config(["$routeProvider", function ($routeProvider) {
+LMSApp.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
     var basePath = "/Resources/Templates/";
 
     $routeProvider
         .when("/", {
             templateUrl: basePath + "_courses.html"
         })
-        .when("/Courses/", {
+        .when("/Courses/:lessonName?", {
+            controller: "CourseController",
             templateUrl: basePath + "_courses.html"
         })
         .when("/User/Add/", {
@@ -28,6 +29,8 @@ LMSApp.config(["$routeProvider", function ($routeProvider) {
         .otherwise({
             templateUrl: basePath + "_404.html"
         });
+
+    $locationProvider.html5Mode.enabled = true;
 }]);
 
 // Animate navigation menu

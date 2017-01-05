@@ -65,7 +65,7 @@ namespace LMS_Project.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Invalid email.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -81,19 +81,22 @@ namespace LMS_Project.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [RegularExpression("^[0-9]{12}$", ErrorMessage = "SSN can only be numeric and be 12 characters long")]
         [Display(Name = "Social Security Number")]
         public string SSN { get; set; }
 
         [Required]
+        [RegularExpression("^([a-z]|å|ä|ö| |[A-Z]|Å|Ä|Ö|-]){1,50}$", ErrorMessage = "")]
         [Display(Name = "First Name")]
         public string Firstname { get; set; }
 
         [Required]
+        [RegularExpression("^([a-z]|å|ä|ö| |[A-Z]|Å|Ä|Ö|-]){1,50}$", ErrorMessage = "")]
         [Display(Name = "Last Name")]
         public string Lastname { get; set; }
 
         [Required]
-        [Phone]
+        [Phone(ErrorMessage = "Invalid phone number")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
