@@ -89,7 +89,7 @@ namespace LMS_Project.Repositories
         /// </summary>
         /// <param name="files"></param>
         /// <param name="mapPath"></param>
-        public void UploadFiles(HttpFileCollectionBase files, string mapPath)
+        public void UploadFiles(HttpFileCollection files, string mapPath)
         {
             for (int i = 0; i < files.Count; i++)
             {
@@ -190,6 +190,22 @@ namespace LMS_Project.Repositories
                 return true;
 
             return false;
+        }
+
+        public Dictionary<string, string> ReturnDuplicateFields(RegisterViewModel model)
+        {
+            Dictionary<string, string> errors = new Dictionary<string, string>();
+
+            if (db.Users.Where(u => u.PhoneNumber == model.PhoneNumber).Any())
+                errors.Add("phoneNumber", "Phonenumber already registred.");
+
+            if (db.Users.Where(u => u.Email == model.Email).Any())
+                errors.Add("email", "Email already registred.");
+
+            if (db.Users.Where(u => u.SSN == model.SSN).Any())
+                errors.Add("ssn", "SSN already registred.");
+
+            return errors;
         }
     }
 }
