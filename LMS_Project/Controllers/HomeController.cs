@@ -24,6 +24,14 @@ namespace LMS_Project.Controllers
     {
         private Repository _repo = new Repository();
 
+        private ApplicationDbContext _context;  
+  
+        public HomeController()  
+        {  
+           this._context = new ApplicationDbContext();         
+        }  
+
+
         public ActionResult Index()
         {
             return View();
@@ -124,6 +132,115 @@ namespace LMS_Project.Controllers
             };
 
             return JsonConvert.SerializeObject(test, Formatting.None, new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult AddStudentsToSchoolClass()
+        {
+            var UserStore = new UserStore<ApplicationUser>(_context);
+            var UserManager = new UserManager<ApplicationUser>(UserStore);
+
+           List<object> students = new List<object>();
+
+            //Lägger in alla elever i listan
+            foreach (var user in UserManager.Users.ToList())
+            {
+                if ((UserManager.IsInRole(user.Id, "Student")) && ((user.SchoolClassModelId == null) || (user.SchoolClassModelId.Trim() == "")))
+                {
+                    students.Add(new { 
+                        Firstname = user.Firstname,
+                        Lastname = user.Lastname,
+                        SSN = user.SSN
+                    });
+                }
+            }
+
+            ViewBag.Students = new SelectList(students, "Id", "Lastname");
+           
+            //------------------------------  
+            //Lägger in alla skolklasser i listan
+            List<object> schoolClasses = new List<object>();
+
+            foreach (var schoolClass in _context.SchoolClasses.ToArray())
+            {
+                
+                    schoolClasses.Add(new
+                    {
+                       Id = schoolClass.SchoolClassID,
+                       Name = schoolClass.Name,
+                       Students = schoolClass.Students
+                    });
+                
+            }         
+
+            ViewBag.SchoolClasses = new SelectList(schoolClasses, "SchoolClassID", "SchoolClassID");
+               
+            // Gör ett test
+            string testSchoolClassId = _context.SchoolClasses.First().SchoolClassID;
+            string testStudentSSN = _context.Users.First().SSN;
+            string[] testAllSSN = new string[1];
+            testAllSSN[0] = testStudentSSN;
+            AddStudentsToSchoolClass(testSchoolClassId, testAllSSN);
+            
+            return View();
+        }
+
+        [AllowAnonymous]
+        //[HttpPost]  
+        public void AddStudentsToSchoolClass(string SchoolClassId, string[] StudentsSSN)  
+        {
+            
+            List<ApplicationUser> studentsInClass = new List<ApplicationUser>();
+            SchoolClassModels SchoolClass = _context.SchoolClasses.SingleOrDefault(sc => sc.SchoolClassID == SchoolClassId);
+
+            //Lägger till student i skolklass
+            foreach (string ssn in StudentsSSN)
+            {
+                ApplicationUser student = _context.Users.SingleOrDefault(s => s.SSN == ssn);
+                SchoolClass.Students.Add(student);
+            }
+
+            _context.Entry(SchoolClass).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            //ViewBag.SchoolClasses = new SelectList(schoolClasses, "SchoolClassID", "SchoolClassID");
+            //ViewBag.SchoolClassStudents = new SelectList(schoolClassStudents, "Id", "Lastname");
+            //ViewBag.Students = new SelectList(studentsInClass, "Id", "Lastname");
+
+
+            //return View();             
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult RemoveStudentsFromSchoolClass()
+        {
+            // Gör ett test
+            string testSchoolClassId = _context.SchoolClasses.First().SchoolClassID;
+            string testStudentSSN = _context.Users.First().SSN;
+            string[] testAllSSN = new string[1];
+            testAllSSN[0] = testStudentSSN;
+            RemoveStudentsFromSchoolClass(testSchoolClassId, testAllSSN);
+            
+            return View();
+        }
+
+        [AllowAnonymous]
+        //[HttpPost]  
+        private void RemoveStudentsFromSchoolClass(string SchoolClassId, string[] StudentsSSN)
+        {
+            SchoolClassModels SchoolClass = _context.SchoolClasses.SingleOrDefault(sc => sc.SchoolClassID == SchoolClassId);
+
+            //Tar bort en student i skolklass
+            foreach (string ssn in StudentsSSN)
+            {
+                ApplicationUser student = _context.Users.SingleOrDefault(s => s.SSN == ssn);
+                SchoolClass.Students.Remove(student);
+            }
+
+            _context.Entry(SchoolClass).State = EntityState.Modified;
+            _context.SaveChanges();
         }
     }
 }
