@@ -181,7 +181,7 @@ namespace LMS_Project.Controllers
 
             if (_repo.CheckUserExistance(model))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "User credential exists");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(_repo.ReturnDuplicateFields(model), Formatting.None, _jsonSettings));
             } 
 
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Firstname = model.Firstname, Lastname = model.Lastname, SSN = model.SSN, PhoneNumber = model.PhoneNumber  };
