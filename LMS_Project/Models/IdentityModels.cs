@@ -37,6 +37,7 @@ namespace LMS_Project.Models
         public DbSet<LessonModels>      Lessons         { get; set; }
         public DbSet<CourseModels>      Courses         { get; set; }
         public DbSet<SchoolClassModels> SchoolClasses   { get; set; }
+        public DbSet <FileObjectUserModels> FileObjectUserModels { get; set; }
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) {}
 

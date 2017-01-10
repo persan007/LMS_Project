@@ -13,10 +13,10 @@ namespace LMS_Project.Models
     public class FileObjectModels
     {
         [Key]
-        public string ID { get; set; }
+        public string FileObjectID { get; set; }
 
-        [ForeignKey("ApplicationUser")]
-        public string UserID { get; set; }
+        //[ForeignKey("ApplicationUser")]
+        //public string UserID { get; set; }
 
         [ForeignKey("CourseModels")]
         public string CourseID { get; set; }
@@ -38,7 +38,7 @@ namespace LMS_Project.Models
 
         public FileObjectModels()
         {
-            this.ID = Guid.NewGuid().ToString();
+            this.FileObjectID = Guid.NewGuid().ToString();
             this.ApplicationUser = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(HttpContext.Current.User.Identity.GetUserId());
         }
     }
