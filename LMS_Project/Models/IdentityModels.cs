@@ -16,9 +16,13 @@ namespace LMS_Project.Models
         public string ProfileImage { get; set; }
         public string SSN { get; set; }
 
+        //[ForeignKey("FileObjectUserModels")]
+        //public string FileObjectUserID { get; set; }
+       
         [ForeignKey("SchoolClassModels")]
         public string SchoolClassModelId { get; set; }
 
+        //public virtual FileObjectUserModels FileObjectUserModels { get; set; }
         public virtual SchoolClassModels SchoolClassModels { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -29,6 +33,8 @@ namespace LMS_Project.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+       
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -37,7 +43,7 @@ namespace LMS_Project.Models
         public DbSet<LessonModels>      Lessons         { get; set; }
         public DbSet<CourseModels>      Courses         { get; set; }
         public DbSet<SchoolClassModels> SchoolClasses   { get; set; }
-        public DbSet <FileObjectUserModels> FileObjectUserModels { get; set; }
+        public DbSet<FileObjectUserModels> FileObjectUsers { get; set; }
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) {}
 
@@ -45,5 +51,19 @@ namespace LMS_Project.Models
         {
             return new ApplicationDbContext();
         }
+
+        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            // Configure entity
+            modelBuilder.Entity<FileObjectUserModels>()
+                        .HasOptional(s => s.FileObjectModels)
+                        .WithRequired(ad => ad.FileObjectUserModels);
+
+        }*/
+
+        
     }
+
+
 }

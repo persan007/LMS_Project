@@ -18,7 +18,7 @@ namespace LMS_Project.Models
         public string FileObjectUserID { get; set; }
         
         [ForeignKey("ApplicationUser")]
-        public virtual string UserID { get; set; }
+        public string UserID { get; set; }
 
         [ForeignKey("FileObjectModels")]
         public string FileObjectID { get; set; }
@@ -27,12 +27,13 @@ namespace LMS_Project.Models
 
         public DateTime UploadedTime { get; set; }
 
-        public ApplicationUser ApplicationUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public FileObjectModels FileObjectModels { get; set; }
+        public virtual FileObjectModels FileObjectModels { get; set; }
 
         public FileObjectUserModels()
         {
+            this.FileObjectUserID = Guid.NewGuid().ToString();
         }
     }
 }

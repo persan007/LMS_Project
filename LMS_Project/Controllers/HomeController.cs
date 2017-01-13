@@ -69,7 +69,7 @@ namespace LMS_Project.Controllers
         [HttpPost]
         public ActionResult UploadFiles()
         {
-            _repo.UploadFiles(Request.Files, Server.MapPath("~/Resources/Tmp/"));
+            //_repo.UploadFiles(Request.Files, Server.MapPath("~/Resources/Tmp/"));
             return View();
         }
 
@@ -241,6 +241,91 @@ namespace LMS_Project.Controllers
 
             _context.Entry(SchoolClass).State = EntityState.Modified;
             _context.SaveChanges();
+        }
+
+        //[Authorize]
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult AddFileObjects(bool InShared = false)
+        {
+            ApplicationUser user = _context.Users.Find(User.Identity.GetUserId());
+            HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
+
+            Dictionary<string, byte[]> data = new Dictionary<string, byte[]>();
+            foreach (HttpFileCollectionBase file in files)
+            {
+                BinaryReader reader = new BinaryReader(file[0].InputStream);
+                data.Add(file[0].FileName, reader.ReadBytes((int)file[0].InputStream.Length));
+            }
+
+            List<FileObjectModels> fileObj = new List<FileObjectModels>();
+            List<FileObjectUserModels> fileUserObj = new List<FileObjectUserModels>();
+
+            foreach (HttpFileCollectionBase file in files)
+            {
+                var current = file[0];
+
+                fileObj.Add(new FileObjectModels()
+                {
+                    Data = data[current.FileName],
+                    Filename = current.FileName,
+                    ContentType = current.ContentType,
+                    CourseID = null
+                });               
+            }
+
+            _context.FilesObjects.AddRange(fileObj);           
+            _context.SaveChanges();
+
+            foreach (HttpFileCollectionBase file in files)
+            {
+                var current = file[0];
+
+                fileUserObj.Add(new FileObjectUserModels()
+                {
+                    UploadedTime = DateTime.Now,
+                    FileObjectID = _context.FilesObjects.SingleOrDefault(f => f.Filename == current.FileName).FileObjectID,
+                    Shared = InShared,
+                    UserID = user.Id
+                });
+            }
+
+            _context.FileObjectUsers.AddRange(fileUserObj);
+            _context.SaveChanges();
+
+            /*ApplicationUser student = _context.Users.SingleOrDefault(s => s.SSN == StudentSSN);
+            FileObjectModels fileObject = _context.FilesObjects.SingleOrDefault(f => f.Filename == InFilename);
+
+            FileObjectUserModels fileObjectUser = new FileObjectUserModels() {UserID = student.Id, FileObjectID = fileObject.FileObjectID, Shared = InShared, UploadedTime = DateTime.Now};
+
+            if (_context.FileObjectUsers.SingleOrDefault(f => f.FileObjectID == fileObject.FileObjectID) == null)
+            {
+                _context.Entry(fileObjectUser).State = EntityState.Added;              
+            }
+            else 
+            { 
+                fileObjectUser = _context.FileObjectUsers.SingleOrDefault(f => f.FileObjectID == fileObject.FileObjectID);
+                fileObjectUser.Shared = InShared;
+                fileObjectUser.UploadedTime = DateTime.Now;
+                _context.Entry(fileObjectUser).State = EntityState.Modified;                
+            }
+            _context.SaveChanges(); */                        
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult GetUserFileObject(string fileObjectId = "1")
+        {
+            FileObjectUserModels fileObjectUser = _context.FileObjectUsers.SingleOrDefault(f => f.FileObjectID == fileObjectId);
+            
+            bool shared = fileObjectUser.Shared;
+
+            byte[] data = fileObjectUser.FileObjectModels.Data;
+            string contentType = fileObjectUser.FileObjectModels.ContentType;
+            string fileName = fileObjectUser.FileObjectModels.Filename;
+
+            return View();
         }
     }
 }

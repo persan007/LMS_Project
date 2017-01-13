@@ -31,15 +31,15 @@ namespace LMS_Project.Models
 
         [Required]
         public byte[] Data { get; set; }
-        
-        public ApplicationUser ApplicationUser { get; set; }
+
+        //public FileObjectUserModels FileObjectUserModels { get; set; }
 
         public CourseModels CourseModels { get; set; }
 
         public FileObjectModels()
         {
             this.FileObjectID = Guid.NewGuid().ToString();
-            this.ApplicationUser = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(HttpContext.Current.User.Identity.GetUserId());
+            //this.ApplicationUser = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(HttpContext.Current.User.Identity.GetUserId());
         }
     }
 }
